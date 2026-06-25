@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDA MAUDE 数据库学术文献与聚类分析仪表盘</title>
+    <meta name="description" content="基于过去10年PubMed关于FDA MAUDE不良事件数据库数据挖掘文献的中文翻译、分类与深度聚类分析大盘">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(20, 26, 46, 0.6);
+            --card-border: rgba(99, 102, 241, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            --secondary: #10b981;
+            --secondary-glow: rgba(16, 185, 129, 0.2);
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #ec4899 100%);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+        }
+
+        /* 滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0e17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #252d4a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3e4c7a;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-btn.active {
+            color: var(--text-main);
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
+        }
+
+        /* 主容器 */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 公共头部 */
+        .intro-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .intro-section h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-section p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 900px;
+            line-height: 1.6;
+        }
+
+        /* 页面视图控制 */
+        .view-panel {
+            display: none;
+        }
+
+        .view-panel.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= 视图一：文献列表检索 ================= */
+        .search-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 968px) {
+            .search-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 左侧筛选侧边栏 */
+        .sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .filter-group-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
+        }
+
+        .filter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .filter-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+        }
+
+        .filter-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.25);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .filter-count {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.4rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .filter-item.active .filter-count {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        /* 右侧文献主面板 */
+        .main-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .search-bar-row {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-bar-input {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .search-bar-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            font-size: 1rem;
+        }
+
+        .search-stats {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* 文献卡片 */
+        .paper-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .paper-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .paper-card:hover {
+            border-color: rgba(99, 102, 241, 0.35);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.08);
+        }
+
+        .paper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .paper-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .paper-card:hover .paper-title {
+            color: #c084fc;
+        }
+
+        .pmid-badge {
+            background: rgba(168, 85, 247, 0.12);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .pmid-badge:hover {
+            background: rgba(168, 85, 247, 0.25);
+            box-shadow: 0 0 8px rgba(168, 85, 247, 0.2);
+        }
+
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .meta-item strong {
+            color: #cbd5e1;
+        }
+
+        .keyword-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .keyword-tag {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: 0.15rem 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* 摘要抽屉展开折叠 */
+        .drawer-btn {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .drawer-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
+        }
+
+        .drawer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(10, 14, 25, 0.5);
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .drawer-content.open {
+            max-height: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .abstract-body {
+            padding: 1.25rem;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+            white-space: pre-line;
+        }
+
+        .abstract-body strong.highlight {
+            color: var(--accent);
+            background: rgba(245, 158, 11, 0.08);
+            padding: 0.1rem 0.3rem;
+            border-radius: 2px;
+        }
+
+        /* ================= 视图二：聚类分析报告 ================= */
+        .report-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* 四大聚类卡片网格 */
+        .cluster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cluster-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .cluster-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+        }
+
+        .cluster-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+        }
+
+        .cluster-card.accent::before {
+            background: var(--gradient-accent);
+        }
+
+        .cluster-num {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .cluster-card.accent .cluster-num {
+            color: var(--accent);
+        }
+
+        .cluster-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .cluster-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .cluster-tech-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.85rem;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .cluster-tech-box strong {
+            color: #cbd5e1;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .cluster-ref {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .cluster-ref strong {
+            color: var(--primary);
+        }
+
+        /* 演进树形脑图 */
+        .roadmap-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .roadmap-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .roadmap-tree {
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            gap: 2rem;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 868px) {
+            .roadmap-tree {
+                flex-direction: column;
+                gap: 3rem;
+            }
+        }
+
+        .roadmap-node {
+            flex: 1;
+            background: rgba(10, 14, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .roadmap-node:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+        }
+
+        .node-time {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .node-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .node-tech {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* 连接箭头效果 */
+        .roadmap-node::after {
+            content: '➔';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(99, 102, 241, 0.4);
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 868px) {
+            .roadmap-node::after {
+                content: '▼';
+                right: auto;
+                left: 50%;
+                bottom: -2.2rem;
+                top: auto;
+                transform: translateX(-50%);
+            }
+        }
+
+        .roadmap-node:last-child::after {
+            display: none;
+        }
+
+        /* 瓶颈与机遇双栏 */
+        .insight-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .insight-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .insight-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .insight-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-title.danger { color: #f87171; }
+        .insight-title.success { color: #34d399; }
+
+        .insight-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .insight-item {
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        .insight-item strong {
+            color: #cbd5e1;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .insight-item p {
+            color: var(--text-muted);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 5rem;
+            padding: 2.5rem;
+            text-align: center;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon"></div>
+            <div class="logo-text">FDA MAUDE RESEARCH DASHBOARD</div>
+        </div>
+        <nav>
+            <button class="nav-btn active" id="btnClustering">研究方向聚类报告</button>
+            <button class="nav-btn" id="btnPapers">PubMed 文献中文译本</button>
+            <a href="analysis_results_zh.html" class="nav-btn" style="text-decoration: none; text-align: center; display: inline-flex; align-items: center; justify-content: center;">独立翻译库 ➔</a>
+            <a href="research_clustering_analysis.html" class="nav-btn" style="text-decoration: none; text-align: center; display: inline-flex; align-items: center; justify-content: center;">独立报告页 ➔</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 头部介绍 -->
+        <section class="intro-section">
+            <h1 id="mainTitle">FDA MAUDE 数据库研究方向聚类分析报告</h1>
+            <p id="mainDesc">汇总 2016-2026 过去十年间 PubMed 收录的关于 FDA 不良事件数据库数据挖掘、机器学习与生成式 AI 领域的全部学术研究。提供多维度聚类探索与交互式文献检索视角。</p>
+        </section>
+
+        <!-- ================= 视图一：研究聚类分析报告 ================= -->
+        <section class="view-panel active" id="panelClustering">
+            <div class="report-layout">
+                <!-- 核心四大聚类 -->
+                <div class="cluster-grid">
+                    <!-- 聚类一 -->
+                    <div class="cluster-card">
+                        <div class="cluster-num">Cluster 01 / 前沿爆发</div>
+                        <h3 class="cluster-title">LLM 驱动的临床自由文本智能挖掘与 ETL 自动化</h3>
+                        <p class="cluster-desc">利用 GPT-4 等生成式大模型突破传统关键词和正则匹配的限制，直接解析医生/患者提交的非结构化病志叙述，完成高级实体关系抽取及流程自动化。</p>
+                        <div class="cluster-tech-box">
+                            <strong>核心技术栈：</strong>
+                            思维链推理 (CoT)、ETL-LLM 混合架构、向量数据库检索、Few-Shot 引导问答。
+                        </div>
+                        <div class="cluster-ref">代表文献：<strong>Kesharwani (2026) / Sohoni (2026) / Hua (2025)</strong></div>
+                    </div>
+
+                    <!-- 聚类二 -->
+                    <div class="cluster-card">
+                        <div class="cluster-num">Cluster 02 / 核心支柱</div>
+                        <h3 class="cluster-title">传统 NLP 与机器学习的事件分类与召回预测</h3>
+                        <p class="cluster-desc">通过微调 ClinicalBERT 等领域预训练语言模型或应用集成学习分类器，对不良事件分类体系、软件 IT 事故及 ML 医疗器械自身的缺陷进行自动多分类与监测预警。</p>
+                        <div class="cluster-tech-box">
+                            <strong>核心技术栈：</strong>
+                            ClinicalBERT、XGBoost、随机森林回归、多分类与词向量算法特征提取。
+                        </div>
+                        <div class="cluster-ref">代表文献：<strong>Luschi (2023) / Wang (2024) / Slivinskis (2025)</strong></div>
+                    </div>
+
+                    <!-- 聚类三 -->
+                    <div class="cluster-card accent">
+                        <div class="cluster-num">Cluster 03 / 数据治理</div>
+                        <h3 class="cluster-title">被动报告数据库的系统性偏差审计与漏报纠偏</h3>
+                        <p class="cluster-desc">分析 MAUDE 自发性报告系统的漏报率和人工分类错误。利用算法审计出大量叙述中提到死亡但大类被归为“受伤”的漏报案例，揭示数据质量短板。</p>
+                        <div class="cluster-tech-box">
+                            <strong>核心技术栈：</strong>
+                            死因文本审计算法、错归分类率逻辑分析、被动报告可靠性统计。
+                        </div>
+                        <div class="cluster-ref">代表文献：<strong>Lalani (2021) / Akhmetov (2026) / Ahrari (2025)</strong></div>
+                    </div>
+
+                    <!-- 聚类四 -->
+                    <div class="cluster-card accent">
+                        <div class="cluster-num">Cluster 04 / 落地应用</div>
+                        <h3 class="cluster-title">真实世界证据 (RWE) 骨干对比与经济冲击评估</h3>
+                        <p class="cluster-desc">将文本挖掘与经济/临床统计模型深度结合，量化对比特定物理设计在实际使用中的翻修率差异（如踝关节 MB vs FB），或量化器械故障对手术延时及运营成本的负面侵蚀。</p>
+                        <div class="cluster-tech-box">
+                            <strong>核心技术栈：</strong>
+                            横断面比对模型、手术室时间延时经济仿真、真实世界生存与翻修对比。
+                        </div>
+                        <div class="cluster-ref">代表文献：<strong>Schneider (2026) / Jiang (2023) / Shapiro (2017)</strong></div>
+                    </div>
+                </div>
+
+                <!-- 技术演进树状图 -->
+                <div class="roadmap-card">
+                    <h3 class="roadmap-title">MAUDE 数据库数据挖掘技术演进轨迹</h3>
+                    <div class="roadmap-tree">
+                        <div class="roadmap-node">
+                            <div class="node-time">第一代 (2016 - 2018)</div>
+                            <div class="node-name">关键词过滤与规则分类</div>
+                            <div class="node-tech">主要依赖 Classification Product Code 及正则匹配，存在高噪声、低重现率等局限，难以有效处理自由文本。</div>
+                        </div>
+                        <div class="roadmap-node">
+                            <div class="node-time">第二代 (2019 - 2023)</div>
+                            <div class="node-name">医学语言模型与深度学习</div>
+                            <div class="node-tech">利用 ClinicalBERT、LSTM 等进行监督式文本分类与情绪度评估。解决自动归类问题，但无法执行多轮因果推理。</div>
+                        </div>
+                        <div class="roadmap-node">
+                            <div class="node-time">第三代 (2024 - 2026)</div>
+                            <div class="node-name">生成式 AI 与思维链系统</div>
+                            <div class="node-tech">应用 GPT-4 等实现自动 ETL 抽取，基于思维链自动转换 API，并引入生成式 Chatbot 进行因果鱼骨图分析。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 瓶颈与机遇 -->
+                <div class="insight-row">
+                    <div class="insight-card">
+                        <h4 class="insight-title danger">⚠️ 被动数据库数据挖掘的底层科学瓶颈</h4>
+                        <div class="insight-list">
+                            <div class="insight-item">
+                                <strong>1. 报告的极低信息熵与高噪声</strong>
+                                <p>MAUDE 数据库中约 48% 的文本缺乏充足的手术细节描述，部分厂家未退回受损器械，导致根本原因挖掘受阻。</p>
+                            </div>
+                            <div class="insight-item">
+                                <strong>2. 分类归纳偏倚与漏报严重</strong>
+                                <p>审计结果发现 MAUDE 存在 17%-23% 的实际患者死亡漏标情况，这使得直接使用官方大类标记进行风险评估会失准。</p>
+                            </div>
+                            <div class="insight-item">
+                                <strong>3. 缺乏总体暴露量（缺乏分母）</strong>
+                                <p>由于 MAUDE 仅收集分子（故障上报数），而没有全美医院实际置入或使用数的“分母”数据，纯数据挖掘无法真实估算器械发生率。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <h4 class="insight-title success">💡 未来研究契机与前沿探索方向</h4>
+                        <div class="insight-list">
+                            <div class="insight-item">
+                                <strong>1. 多源主/被动数据融合技术</strong>
+                                <p>将 MAUDE 的自发性报告与高成本的 TVT、IRIS 等国家级主动注册登记库进行 NLP 语义配对与比对验证。</p>
+                            </div>
+                            <div class="insight-item">
+                                <strong>2. AI / ML 医疗器械的专项治理</strong>
+                                <p>研究重点已从传统的泵类、骨科植入物向新批准的 AI 医疗软件的算法漂移和输入质量监测转移，建立新型 AI 监管框架。</p>
+                            </div>
+                            <div class="insight-item">
+                                <strong>3. 结合物理/图片的“多模态”根因回溯</strong>
+                                <p>未来的方向是结合多模态 LLM，不仅挖掘文本，还联合分析厂家提供的器械破损、裂纹、断裂图像，实现自动化病因溯源。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 视图二：PubMed 文献中文译本 ================= -->
+        <section class="view-panel" id="panelPapers">
+            <div class="search-container">
+                <!-- 左侧侧边栏 -->
+                <aside class="sidebar">
+                    <div class="filter-group-title">文献分类筛选</div>
+                    <div class="filter-list">
+                        <div class="filter-item active" data-cat="all">
+                            全部文献 <span class="filter-count" id="countAll">41</span>
+                        </div>
+                        <div class="filter-item" data-cat="1">
+                            大语言模型 & 生成式 AI <span class="filter-count" id="count1">8</span>
+                        </div>
+                        <div class="filter-item" data-cat="2">
+                            传统 NLP & 机器学习 <span class="filter-count" id="count2">29</span>
+                        </div>
+                        <div class="filter-item" data-cat="3">
+                            临床器械安全 & 统计挖掘 <span class="filter-count" id="count3">4</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- 右侧检索面板 -->
+                <div class="main-panel">
+                    <!-- 检索框 -->
+                    <div class="search-bar-row">
+                        <div class="search-input-wrapper">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="paperSearchInput" class="search-bar-input" placeholder="输入文献标题、作者、PMID或摘要关键词快速检索...">
+                        </div>
+                        <div class="search-stats" id="searchResultCount">已匹配 41 篇文献</div>
+                    </div>
+
+                    <!-- 动态文献列表 -->
+                    <div class="paper-list" id="paperListContainer">
+                        <!-- 由 JavaScript 填充 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 FDA MAUDE 医疗器械学术文献智能大盘</p>
+        <p>数据源: PubMed 2016-2026 过去十年间相关文献汇总</p>
+        <p>页面构建技术支持: Antigravity AI Agent & 智囊开发组</p>
+    </footer>
+
+    <script>
+        // 41 篇论文的数据源
+        const papersData = [
+            // 分类一 (1 - 8)
+            {
+                id: 1,
+                cat: 1,
+                title: "软件类医疗器械安全监测自动化：基于 FDA MAUDE 数据的洞察",
+                journal: "Stud Health Technol Inform (2026年5月21日)",
+                pmid: "42174919",
+                authors: "Kesharwani R, Cvijic L, Denecke K",
+                keywords: ["自然语言处理", "自动分类", "大语言模型", "BERTopic聚类"],
+                abstract: "数字健康干预（DHI）利用数字技术提供并支持医疗服务。当这些干预措施注册为医疗器械时，其相关不良事件必须予以报告。本研究对 FDA MAUDE 数据库中记录的软件类医疗器械错误及事故进行了探讨。利用自然语言处理方法（具体为 BERTopic 聚类和大语言模型分类），我们分析了叙事性报告，以识别事件类型、诱发因素及时间分布规律。\n\nBERTopic 能有效揭示主题趋势及演变，但许多聚类结果更多地反映了监管文件的语言惯例，而非软件特有的问题。网络安全、人机交互以及疫情监测等主题的出现，表明上市后监管正在延伸至更广泛的人机互动及公共卫生领域。虽然 MAUDE 叙述性文本提供了有价值的洞察，但其上下文细节的缺失限制了根本原因分析。为支持 DHI 的更安全设计及监管，仍需更完善的报告结构。"
+            },
+            {
+                id: 2,
+                cat: 1,
+                title: "利用大语言模型自动分类前列腺癌水凝胶直肠周围间隔物置入术后的不良事件",
+                journal: "Urology (2026年3月)",
+                pmid: "41565161",
+                authors: "Sohoni N, Sohoni NS, Sutherland RA, Sundaresan VM, Smani S, Ananth P, Onofrey JA, Aneja S, Miszczyk M, Lee HJ, Olivieri JE, Leapman MS",
+                keywords: ["大语言模型", "GPT-4o", "不良事件分类", "CTCAE严重度分级"],
+                abstract: "目的：评估大语言模型（LLMs）在前列腺放射治疗前使用直肠周围水凝胶间隔物（SpaceOAR）相关不良事件（AEs）分析中的表现。\n\n方法：检索 FDA MAUDE 数据库中与“SpaceOAR”相关的报告。最初通过人工提取了 97 份报告，对其不良事件问题、对放疗时间的影响以及基于不良事件常用术语标准（CTCAE）的严重程度进行分类。我们对比了 3 个大语言模型家族与人工提取的准确率差异，并使用表现最好的 LLM 对 2015 年 1 月至 2024 年 12 月间所有可用的 SpaceOAR MAUDE 报告（n = 1455）进行分类。\n\n结果：GPT-4o 表现最优，综合得分为 4.96（σ = 0.00526），极其接近人工评审员的 4.99（σ = 0.216）。在全部 1455 份报告中，GPT-4o 揭示出最常见的主要问题是水凝胶位置不当（58.7%）、感染/炎症/脓肿（10.4%）、瘘管（7.1%）以及直肠溃疡（4.7%）。入住 ICU 和死亡的报告率分别为 0.1% 和 0.3%。\n\n结论：研究结果表明 LLMs 在自动整理器械相关不良事件这一耗时工作上具有巨大潜力。SpaceOAR 相关的严重 AE 凸显了潜在的安全性隐患，需进行持续的动态监测。"
+            },
+            {
+                id: 3,
+                cat: 1,
+                title: "AutoQUEST：MAUDE 研究中用于自动问题生成与验证的思维链流水线",
+                journal: "Stud Health Technol Inform (2025年8月7日)",
+                pmid: "40775892",
+                authors: "Hua L, Gong Y",
+                keywords: ["思维链 (CoT)", "问题自动化生成", "大语言模型", "数据探索分析"],
+                abstract: "使用 MAUDE 数据库构建研究问题时，通常会受到数据预处理和分析的困扰。为了迎接这一挑战，本研究提出了 AutoQUEST——一个基于 Python 的提示词流水线，利用大语言模型（LLMs）和思维链（CoT）来实现研究问题的自动化生成。\n\n在 5 个独立的测试用例中，AutoQUEST 生成有效研究问题的准确率达到了 100%，且数据库查询执行成功率处于 75% 至 100% 之间。该技术简化了研究问题的提出过程，降低了数据提取和转换的技术壁垒，提高了医疗器械患者安全研究的效率。"
+            },
+            {
+                id: 4,
+                cat: 1,
+                title: "揭示 MAUDE 数据库中的内窥镜手术事件：一种 ETL-LLM 混合方法",
+                journal: "Stud Health Technol Inform (2025年6月26日)",
+                pmid: "40588888",
+                authors: "Shi Y, Yang E, Gong Y",
+                keywords: ["ETL流水线", "大语言模型", "内窥镜不良事件", "非结构化文本抽取"],
+                abstract: "依赖 MAUDE 数据库开展患者安全研究的增加，强调了建立和标准化事件报告提取与分析方法的关键性。缺乏可复现的方法会导致对不良事件的理解不一致，降低临床警示作用。因此，本研究提出了结合大语言模型的 ETL（提取-转换-加载）流水线来标准化报告的识别与解析。\n\n以胃肠内窥镜夹报告为例，ETL-LLM 方法展示了在提取和分析分类与叙述性报告方面的有效性，揭示了患者并发症、手术过程及器械使用等方面的深度洞察。这种创新的透明方法展示了其及时向临床医生提供警示并推动基于开源数据库安全研究的潜力。"
+            },
+            {
+                id: 5,
+                cat: 1,
+                title: "利用数据流水线与大语言模型推进患者安全事件研究",
+                journal: "Stud Health Technol Inform (2025年5月15日)",
+                pmid: "40380434",
+                authors: "Shah F, Yu Y, Shi Y, Gong Y",
+                keywords: ["openFDA API", "大语言模型", "MDR报告归类", "ETL-LLM整合"],
+                abstract: "研究利用开源 MAUDE 数据库时，经常因为数据提取和处理的技术流程不够清晰，从而影响了研究的复现和结果一致性。通过使用 openFDA API 和我们标准化的 MAUDE 提取-转换-加载 (ETL) 流水线，本项目探讨了如何利用大语言模型（LLM）来分析医疗器械报告（MDR）中的自由文本叙述，以提高事件分类的精度与效率。\n\n该 ETL-LLM 方法以涉及内窥镜粘膜切除术的 MDR 数据为载体进行了功能验证，并探讨了将其推广到其他医疗器械故障分析中的可行性。未来的工作需要扩大器械样本，进一步验证该技术在真实世界中的鲁棒性。"
+            },
+            {
+                id: 6,
+                cat: 1,
+                title: "利用大语言模型理解 MAUDE 报告中的叙事文本",
+                journal: "Stud Health Technol Inform (2025年4月8日)",
+                pmid: "40200473",
+                authors: "Shi Y, Gong Y",
+                keywords: ["GPT-4-turbo", "叙述文本挖掘", "手术步骤发现", "内窥镜夹不良反应"],
+                abstract: "利用 MAUDE 数据库研究医疗器械相关不良反应的兴趣不断增长。然而，这些报告中的叙事文本在很大程度上仍未被开发，许多有价值的临床洞察未被利用，从而难以拼凑出事件的完整线索。\n\n为了弥补这一差距，本研究使用 OpenAI 的 GPT-4-turbo 模型来分析和解读这些文本。我们聚焦于涉及内窥镜夹的 MAUDE 报告，成功识别出未被编码的手术步骤并挖掘出了其他临床洞察。这种方法展示了大模型在处理非结构化数据上的卓越能力，为人工标注提供了一种低成本且极其高效的替代选择。"
+            },
+            {
+                id: 7,
+                cat: 1,
+                title: "开发基于生成式 AI 的 MAUDE 数据库分析问答机器人",
+                journal: "Stud Health Technol Inform (2024年8月22日)",
+                pmid: "39176609",
+                authors: "Yu Y, Shi Y, Feng Y, Gong Y",
+                keywords: ["生成式AI", "Chatbot", "自然语言查询", "API自动映射"],
+                abstract: "本文开发并评估了一个旨在帮助研究人员更便捷地查询和解析 MAUDE 数据库不良事件的智能问答机器人。该机器人由生成式 AI 驱动，支持文本检索与数量计算。\n\n该问答机器人利用 openFDA API 并调用 GPT-4 模型来解析用户的自然语言提问、自动将其映射为正确的 API URL 请求，并精炼归纳出事件概要。通过使用 few-shot（少样本）样本对查询语句-API地址的关联训练，机器人的调用准确率显著提高。此外，其生成的中文文本总结也获得了临床专家的正面评价。"
+            },
+            {
+                id: 8,
+                cat: 1,
+                title: "通过 GPT-4 和因果可视化增强 MAUDE 数据库的实用性",
+                journal: "Stud Health Technol Inform (2024年7月24日)",
+                pmid: "39049270",
+                authors: "Yu Y, Shi Y, Feng Y, Gong Y",
+                keywords: ["GPT-4", "鱼骨图可视化", "结肠镜检查报告", "相似度语义搜索"],
+                abstract: "MAUDE 数据库是深入理解医疗器械及健康信息技术（Health IT）故障的宝贵公共资源。然而，它庞大的体量与极其复杂的结构给医学分析带来了巨大技术壁垒。\n\n为此，我们开发了一套基于 GPT-4 的全自动分析流水线，以极少的人工标注实现了安全事件的提取、归类。在对 2011-2021 年间 4459 份结肠镜检查不良事件的分析中，我们将事件划分为操作、人为因素及器械原因。利用鱼骨图（Ishikawa diagrams）将数据在向量数据库中进行可视化及相似度检索对比。该方案极大地提升了数据库的二级开发效能。"
+            },
+
+            // 分类二 (9 - 37)
+            {
+                id: 9,
+                cat: 2,
+                title: "体外循环过程中氧合器失效及其相关的损伤模式研究",
+                journal: "Perfusion (2026年5月21日)",
+                pmid: "42166660",
+                authors: "Bradshaw JC, Bradshaw A, Agarwal R, Dontu V, Shirodkar S, Tran C, Lawton JS, Pasrija C, Wierschke C, Lester L",
+                keywords: ["体外循环", "氧合器失效", "监督式NLP", "损伤关联分析"],
+                abstract: "背景：体外循环（CPB）氧合器在术中提供气体交换。虽然罕见，但其失效会导致灾难性的发病率和死亡率，目前相关的分析还非常局限。我们旨在分析导致重度损伤或死亡的氧合器故障规律。\n\n方法：回顾性分析了 2015 年 4 月至 2025 年 4 月间导致伤害或死亡的 CPB 氧合器失效报告。利用监督式自然语言处理（NLP）分析文字叙述以提取核心临床主题。\n\n结果：共有 388 起事件符合标准（279 起受伤，109 起死亡）。分析表明某些特定厂家的设备在死亡案例中占了不成比例的极高比重，说明必须加强对术中多维报警的诊断能力。"
+            },
+            {
+                id: 10,
+                cat: 2,
+                title: "输尿管软镜相关患者损伤：基于 FDA MAUDE 报告的横断面分析与可靠性验证的损伤分类体系",
+                journal: "J Endourol (2026年5月20日)",
+                pmid: "42159167",
+                authors: "Akhmetov D, Oraz SS, Kambarov DT, Bolatov A",
+                keywords: ["输尿管镜", "分类系统", "评分者间信度", "被动监管"],
+                abstract: "背景：软性输尿管镜不良事件不断增加，但缺乏标准化的损伤分类法限制了研究的复现。\n\n方法：对 2020-2025 年间 532 份输尿管镜受伤/死亡 MAUDE 报告进行横断面分析。构建并评估了一个可复现的损伤分类体系，并在多位临床医生中进行评分可靠性测试。\n\n结果：分类体系具有较高的评分者间信度（κ = 0.82）。创伤性（31.1%）和感染性（30.4%）损伤占主导地位。大多数事件（69.4%）被评定为中度或重度。虽然断裂/脱落是最常见的机械因素，但 48% 的报告缺少关键细节导致难以分类。与器械再次处理（reprocessing）及污染相关的报告中重度事件比例极高。\n\n结论：验证过的损伤分类体系使被动监管库中的伤害表型分析变得可复现，但仍有近半数报告因为细节有限无法进行精确原因分析。"
+            },
+            {
+                id: 11,
+                cat: 2,
+                title: "预装式与手动装载式人工晶体推注失败模式：基于 FDA 器械报告的分析",
+                journal: "J Cataract Refract Surg (2026年5月18日)",
+                pmid: "42153648",
+                authors: "Hecht I, Tuuminen R, Kanclerz P, Sella R",
+                keywords: ["人工晶体", "预装式系统", "推注失败", "文本挖掘"],
+                abstract: "目的：对比预装式与手动装载式人工晶状体（IOL）推注系统的失效模式分布差异。\n\n方法：检索 2016-2025 年间描述术中人工晶体装载、推注或定位问题的报告。使用自动化自然语言处理辅助对自由文本叙述进行清洗和特征分类。\n\n结果：在符合标准的 14,460 份术中报告中，10,567 份涉及预装式系统，3,893 份涉及手动装载式。手动装载式系统显示出更高的人工晶体损伤及装载问题，而预装式系统则表现出更高的推注失败率及材料异常。"
+            },
+            {
+                id: 12,
+                cat: 2,
+                title: "FDA 批准的 AI 医疗器械的利益与风险报告现状",
+                journal: "JAMA Health Forum (2025年9月5日)",
+                pmid: "41004181",
+                authors: "Lin JC, Jain B, Iyer JM, Rola I, Srinivasan AR, Kang C, Patel H, Parikh RB",
+                keywords: ["人工智能 (AI)", "机器学习 (ML)", "审批缺陷", "不良事件回顾"],
+                abstract: "目的：探讨 FDA 批准的 AI/ML 医疗器械的临床试验与上市后不良事件。\n\n方法：关联分析了 FDA 审批数据库、MAUDE 数据库以及医疗器械召回数据库中 1995-2023 年间 cleared 的所有 691 款 AI/ML 器械。\n\n结果：发现器械审批决策摘要往往缺乏训练样本量（53.3%）和人口统计信息（95.5%）。只有 6 款器械有随机临床试验数据。在 MAUDE 中共确定了 489 起涉及 AI 器械的不良事件，主要因软件问题导致，包含 458 例机器故障、30 例病人伤害和 1 例病人死亡。\n\n结论：这表明目前尚缺乏针对 AI/ML 医疗器械安全与风险的标准化监管体系，亟需专用的上市后监测通道。"
+            },
+            {
+                id: 13,
+                cat: 2,
+                title: "可膨胀但代价是什么？373 例真实椎体肿瘤切除网笼（Corpectomy Cages）不良事件失效模式分析",
+                journal: "Spine (2025年9月4日)",
+                pmid: "40905304",
+                authors: "Schneider D, Brown EDL, Toscano D, Obeng-Gyasi B, Elsamadicy AA, Sciubba DM, Lo SL",
+                keywords: ["椎体网笼", "翻修风险", "AI辅助分类", "置入器故障"],
+                abstract: "设计：横断面研究。\n\n方法：使用 AI 辅助分类技术，对 MAUDE 数据库中 373 例涉及可膨胀椎体网笼的不良事件报告进行特征归类与解剖位置/翻修状态比对。\n\n结果：置入器械相关故障是最常见的不良事件（34.3%），但很少导致严重临床后果或翻修。相反，虽然发生率低，但重度机械结构失效如终板塌陷（80%）和器械移位（77.8%）具有极高的二次翻修率。此外，移位在腰椎中更常见，而高度丢失则多见于颈椎。"
+            },
+            {
+                id: 14,
+                cat: 2,
+                title: "规范上市后 AI/ML 医疗器械的通用治理框架",
+                journal: "NPJ Digit Med (2025年5月31日)",
+                pmid: "40450160",
+                authors: "Babic B, Glenn Cohen I, Stern AD, Li Y, Ouellet M",
+                keywords: ["人工智能", "算法安全性", "治理框架", "监测短板"],
+                abstract: "本研究对 FDA 利用 MAUDE 数据库对合法上市的 AI/ML 医疗器械进行上市后监管的情况进行了系统性评估。我们重点分析了 2010-2023 年间获批的约 950 款 AI/ML 设备的 adverse events，指出当前的被动报告体系在评估算法漂移等 AI/ML 特殊安全性方面存在显著缺陷，并提出了针对 AI 功能更新的多维治理框架。"
+            },
+            {
+                id: 15,
+                cat: 2,
+                title: "利用人工智能提升医疗器械上市后监管：以输液泵为例",
+                journal: "Technol Health Care (2025年3月)",
+                pmid: "40105162",
+                authors: "Merdović N, Spahić L, Hundur M, Pokvić LG, Badnjević A",
+                keywords: ["机器学习", "输液泵监测", "预防性维护", "预测建模"],
+                abstract: "基于自发不良事件登记库（如 MAUDE）的分析发现，传统的输液泵监测和日常维护策略存在较大改进空间。为了提高病患和医护人员的使用安全性，本研究利用机器学习和多维分类特征构建了器械早期缺陷预测模型，将现有的“发生后响应式”器械治理转变为“主动预防预测式”治理。"
+            },
+            {
+                id: 16,
+                cat: 2,
+                title: "用于预测 FDA 医疗器械召回的机器学习算法",
+                journal: "West J Emerg Med (2025年1月)",
+                pmid: "39918157",
+                authors: "Barbosa Slivinskis V, Agi Maluli I, Seth Broder J",
+                keywords: ["随机森林", "召回预测", "医疗风险拦截", "提前预警"],
+                abstract: "目的：评估使用公共检索数据训练的机器学习模型预测 FDA 医疗器械召回的精准度。\n\n方法：构建了基于随机森林回归的模型，自动检索并整合 Google 趋势和 PubMed 的相关文献搜索频率特征，并在 500 个器械样本上进行了训练与检验。\n\n结果：模型能够以高达 90% 的灵敏度和 100% 的特异性，提前 3 到 12 个月成功预测医疗器械的最终召回状态。这表明基于公开检索数据的 ML 算法能作为常规安全库的有力补充，在器械危害大规模扩散前将其拦截。"
+            },
+            {
+                id: 17,
+                cat: 2,
+                title: "良性前列腺增生手术期间的不良事件是否与器械相关？MAUDE 数据库系统回顾",
+                journal: "Urologia (2024年5月)",
+                pmid: "38520298",
+                authors: "Heidenberg DJ, Nethery E, Wymer KM, Judge N, Cheney SM, Stern K",
+                keywords: ["前列腺手术", "Clavien分级", "器械缺陷", "操作误区"],
+                abstract: "方法：检索 2018-2021 年间良性前列腺增生（BPH）微创及传统手术的相关不良事件。根据修改版的 Clavien-Dindo 分级体系，建立了一个 Level I-IV 的分类模式，以将事件划分为“纯器械缺陷驱动”与“非器械因素驱动（即医生操作原因）”。\n\n结果：分析共识别出 873 起事件。结果表明，Aquablation 和水蒸气热疗产生的显著临床并发症，大部分并不是由物理设备本身的故障所导致的，更多是与手术入路和患者特征相关。"
+            },
+            {
+                id: 18,
+                cat: 2,
+                title: "自动识别涉及机器学习医疗器械的安全事件",
+                journal: "Stud Health Technol Inform (2024年1月25日)",
+                pmid: "38269880",
+                authors: "Wang Y, Lyell D, Coiera E, Magrabi F",
+                keywords: ["文本分类器", "机器学习器械", "安全监控", "外部验证"],
+                abstract: "针对 MAUDE 中极其稀疏的 ML 医疗器械故障报告，本研究开发了自动文本分类器。我们基于四种特征集构建了分层分类器，并将其放在真实数据分布中测试。结果发现，结合了设备通用名称的分类器在测试集（F1 = 85%）和外部独立验证集（精确度 = 100%）上表现优异，证实其可以直接部署于日常上市后安全事件流程中，实时截获新出现的算法失效。"
+            },
+            {
+                id: 19,
+                cat: 2,
+                title: "血管闭合器（Angio-Seal）的真实世界安全体验：基于 MAUDE 的分析",
+                journal: "J Endovasc Ther (2025年10月)",
+                pmid: "38110358",
+                authors: "Ahrari A, Healy GM, Min A, Alkhalifah F, Oreopoulos G, Teng Tan K, Jaberi A, Rajan DK, Mafeld S",
+                keywords: ["血管闭合器", "失效分析", "CIRSE分级", "漏报隐患"],
+                abstract: "本研究对 2019-2020 年间 715 起涉及 Angio-Seal 的安全事件进行特征提取与分类。使用 CIRSE 评分标准，我们发现最常见的失效模式为使用已损坏的设备（43.4%）和部署失败（20.1%）。虽然大多数患者仅产生轻微局部出血，可通过人工按压解决，但只有 27.8% 的受损设备最终退回给了厂家。作者呼吁提高器械归还率，并针对操作人员制定系统性数据审计手段。"
+            },
+            {
+                id: 20,
+                cat: 2,
+                title: "证据临床工程：应用自然语言处理识别与分类健康信息技术（Health IT）不良事件",
+                journal: "Heliyon (2023年11月)",
+                pmid: "37954315",
+                authors: "Luschi A, Nesi P, Iadanza E",
+                keywords: ["ClinicalBERT", "Explainable AI", "健康IT故障", "临床工程"],
+                abstract: "本研究致力于构建一个将 Real-World Evidence 引入健康技术评估（HTA）和医疗器械日常管理的框架。我们微调了 pre-trained 的 ClinicalBERT 模型，并在由专家标注的 3075 例 Health IT 不良事件（来自 MAUDE 数据库）上进行了测试。模型展现出了极佳的解释性和高精度，为 Health IT 软件带来的隐性患者危害建立了精确分类底座。"
+            },
+            {
+                id: 21,
+                cat: 2,
+                title: "基于 FDA MAUDE 数据库的 Jetstream 斑块旋切系统治疗外周动脉疾病安全性评估",
+                journal: "J Endovasc Ther (2025年8月)",
+                pmid: "37750495",
+                authors: "Min A, Alkhalifa F, Ahrari A, Healy G, Jaberi A, Tan KT, Mafeld S",
+                keywords: ["斑块旋切系统", "CIRSE分类", "患者并发症", "机械故障特征"],
+                abstract: "方法：回顾分析了 2019-2021 年间 500 起涉及 Jetstream 旋切系统的报告。\n\n结果：最常见的患者并发症是动脉栓塞（4.4%）和血管穿孔（2.4%）。最常见的机械故障模式是设备在导丝上发生嵌顿（27%）、刀片失去旋转（23%）以及抽吸失效（20%）。依据 CIRSE 分类，95% 的事件没有留下后遗症，仅需术中延长观察。该研究强调了规范的医生术前操作培训对于避免导丝嵌顿等问题的必要性。"
+            },
+            {
+                id: 22,
+                cat: 2,
+                title: "主动脉内气囊泵（IABP）特征性不良事件分析：基于 2016-2021 年 FDA MAUDE 数据库",
+                journal: "Cardiovasc Revasc Med (2023年11月)",
+                pmid: "37302952",
+                authors: "Schwarzman LS, Ishaaya EC, Patel D, Megowan N, Thomas JL",
+                keywords: ["主动脉气囊泵", "机械故障", "临床转归", "光学故障"],
+                abstract: "分析了 2795 起 IABP 相关不良事件分类。结果发现，设备本身故障占 91.4%，而患者并发症及死亡极低（死亡仅占 5.6%，且多由其自身的基础病心跳骤停导致）。最常见的失效机制为球囊导管破损/泄漏（37.9%），并且发现某特定型号（Sensation）伴随独有的光学和校准故障。这表明该器械在使用中较安全，未来的改进应侧重于球囊材料防刺穿的升级。"
+            },
+            {
+                id: 23,
+                cat: 2,
+                title: "良性前列腺增生微创手术相关并发症的 MAUDE 数据库回顾",
+                journal: "World J Urol (2023年7月)",
+                pmid: "37222779",
+                authors: "Porto JG, Arbelaez MCS, Blachman-Braun R, Bhatia A, Shah HN",
+                keywords: ["微创前列腺手术", "Gupta分级", "并发症比对", "系统错误率"],
+                abstract: "方法：检索并比对了 Rezum、Urolift 等微创手术共 692 份报告。应用 Gupta 分级系统对其进行严重程度分级。\n\n结果：虽然多数事件为 Level 1 和 2 的轻度损害，但 Urolift 和 TUMT 手术后的重度并发症发生率（分别为 23% 和 21%）明显高于 Rezum（7%）。在 Rezum 手术中，大部分程序中断是由于加热系统出现 screen error (93%) 导致的；而在 Urolift 中，最严重的并发症是术后血肿，Rezum 则是尿路感染和脓毒症。"
+            },
+            {
+                id: 24,
+                cat: 2,
+                title: "不仅仅是算法：FDA 报告的涉及机器学习医疗器械的安全事件分析",
+                journal: "J Am Med Inform Assoc (2023年6月20日)",
+                pmid: "37071804",
+                authors: "Lyell D, Wang Y, Coiera E, Magrabi F",
+                keywords: ["机器学习算法", "输入数据缺陷", "人机交互", "系统性偏差"],
+                abstract: "系统性分析了 266 起涉及 ML 医疗器械的不良事件报告。结果表明，82% 的不良事件是由于输入给算法的数据质量存在缺陷（如图像分辨率差、伪影、接口数据传输故障）导致算法输出了错误结论。此外，尽管纯属医生使用不当导致的“使用问题”占比极低（7%），但其致死致伤的几率却高出了整整 4.2 倍。这表明 ML 的监管需要超越纯粹对算法数学性能的关注，建立包含人机交互（Human-in-the-loop）的整体防错体系。"
+            },
+            {
+                id: 25,
+                cat: 2,
+                title: "软性膀胱镜重复使用及污染的不良事件分析",
+                journal: "Can J Urol (2022年12月)",
+                pmid: "36495577",
+                authors: "Lee J, Kaplan-Marans E, Jivanji D, Tennenbaum D, Schulman A",
+                keywords: ["软性膀胱镜", "消毒交叉污染", "尿路感染", "病因特征"],
+                abstract: "本研究对 reusable 膀胱镜涉及的患者感染和器械故障进行了多维分析。结果表明，软镜由于精密结构，在日常消毒清洗（reprocessing）中容易形成生物膜污染，从而在检查后引发患者交叉尿路感染甚至脓毒性休克，强调了向一次性无菌软镜过渡可能带来的患者安全性收益。"
+            },
+            {
+                id: 26,
+                cat: 2,
+                title: "用于食管功能测试的器械评估报告",
+                journal: "VideoGIE (2022年1月)",
+                pmid: "35059533",
+                authors: "Pannala R, Watson RR, Vela MF",
+                keywords: ["食管测压", "HRM", "芝加哥诊断分级", "器械故障"],
+                abstract: "该文献汇总了食管测压和 pH 监测等食管检查器械在 MAUDE 中的相关故障。重点探讨了基于 HRM 数据的芝加哥诊断分类（Chicago classification）标准的准确度表现及对检查中止事件的特征分类。"
+            },
+            {
+                id: 27,
+                cat: 2,
+                title: "应用自然语言处理评估 hysteroscopic 避孕装置取出不良事件报告",
+                journal: "Pharmacoepidemiol Drug Saf (2022年4月)",
+                pmid: "34919294",
+                authors: "Mao J, Sedrakyan A, Sun T, Guiahi M, Chudnoff S, Kinard M, Johnson SB",
+                keywords: ["NLP信息抽取", "Essure避孕环", "翻修取出", "模型评估"],
+                abstract: "本研究开发了一套 NLP 数据标注提取模型，从 2005-2018 年间 Essure 避孕环取出相关的 MAUDE 报告中自动抽取 6 类不良事件特征（如疼痛、穿孔、心理焦虑等）。评估显示 NLP 模型达到了极高的精度（F1-score 在各维度处于 0.85-0.92），为被动报告库的不良事件智能化挖掘提供了一套非常规范的标注技术路线。"
+            },
+            {
+                id: 28,
+                cat: 2,
+                title: "美国 FDA 医疗器械不良事件报告中非死亡类别中的死亡事件漏报分析",
+                journal: "JAMA Intern Med (2021年9月1日)",
+                pmid: "34309624",
+                authors: "Lalani C, Kunwar EM, Kinard M, Dhruva SS, Redberg RF",
+                keywords: ["死亡事件漏报", "文本审计算法", "被动监测偏倚", "监管缺陷"],
+                abstract: "重要性：FDA 规定如果器械使用可能导致或促成了患者死亡，必须标记为“死亡”大类。但分类的准确性饱受质疑。\n\n方法：开发了自然语言处理（NLP）审计算法，扫描 1991-2020 年间在报告大类中被标记为“受伤”或“器械故障”但实际描述文本中写明了“患者死亡（patient expired/died）”的记录，随后进行大比例专家抽样验证。\n\n结果：算法锁定了 290,141 份描述中提及死亡但未归入死亡类的报告，有 47.9% 实际上被归为了器械故障和受伤。抽样人工核实表明，真正的死亡漏标率高达 17% 至 23%。\n\n结论：许多涉及死亡的不良事件被严重归类错误。由于 FDA 通常只例行审查标记为“死亡”的报告，这一漏洞极大削弱了医疗器械的安全预警作用。"
+            },
+            {
+                id: 29,
+                cat: 2,
+                title: "利用混合深度学习模型构建健康信息技术（Health IT）不良事件数据库",
+                journal: "J Biomed Inform (2020年10月)",
+                pmid: "32916305",
+                authors: "Kang H, Gong Y",
+                keywords: ["混合深度学习", "CNN-RNN", "Health IT故障", "安全事件库"],
+                abstract: "设计不良的 Health IT 软件系统会破坏临床原有的工作流，诱发新的用药/诊断错误。为了从海量 MAUDE 数据中自动检索并提取出属于 Health IT 的故障记录，本研究对比了多种混合深度学习分类器（结合了 LR、CNN 和 Hierarchical RNN）。模型实现了 0.903 的高准确率，并据此建立了拥有 48,997 份记录的首个公开 Health IT 安全事件数据库。"
+            },
+            {
+                id: 30,
+                cat: 2,
+                title: "SAGES TAVAC 共聚焦激光显微内镜（CLE）的安全与有效性分析",
+                journal: "Surg Endosc (2021年5月)",
+                pmid: "32405892",
+                authors: "Al-Mansour MR, Caycedo-Marulanda A, Tsuda S",
+                keywords: ["共聚焦显微内镜", "光学活检", "安全等级评估", "不良反应分类"],
+                abstract: "对 PubMed 和 FDA MAUDE 数据库中涉及共聚焦显微内镜的医疗器械故障及患者损伤报告进行了梳理，以评定该新技术的安全特征和诊断准确度分级。发现其具有良好的安全轮廓，不良事件多来源于荧光剂的轻微过敏。"
+            },
+            {
+                id: 31,
+                cat: 2,
+                title: "美国 FDA 2009-2019 年围产期死亡案例中未识别的主体心率干扰：一个关键的患者安全问题",
+                journal: "BMC Pregnancy Childbirth (2019年12月16日)",
+                pmid: "31842798",
+                authors: "Kiely DJ, Oppenheimer LW, Dornan JC",
+                keywords: ["胎儿监护仪", "自相关算法", "心率干扰", "围产期死胎"],
+                abstract: "背景：母体心率信号干扰是一种信号处理错误，即胎儿监护仪的自相关算法错误地捕获并输出母亲的脉搏，从而掩盖已发生死胎或胎儿窘迫的事实。目前临床指南缺乏针对此机制的预防规范。\n\n方法：检索 10 年间 MAUDE 中涉及胎心监护仪的全部“死亡”事件并进行临床文本分析。\n\n结果：证实了 47 例由该心率信号干扰漏报导致延误干预的围产期胎儿死亡。指出厂商虽然在说明书里有防范母体脉搏的建议，但这在产科指南中被严重忽略。"
+            },
+            {
+                id: 32,
+                cat: 2,
+                title: "经子宫动脉栓塞术治疗肌瘤的相关不良事件分析",
+                journal: "J Minim Invasive Gynecol (2019年5-6月)",
+                pmid: "30016750",
+                authors: "Armstrong AA, Kroener L, Al-Safi ZA",
+                keywords: ["子宫动脉栓塞", "回顾性分析", "并发症特征", "子宫切除率"],
+                abstract: "回顾性检索 20 年间与子宫动脉栓塞相关的 193 份 MAUDE 报告。分析并将事件分类为疼痛（35.2%）、操作失误（19.2%）、翻修与切除率等，为临床医生提供了关于器械意外风险的重要数据。提示子宫切除率达到了 7.8%，死亡率占 2.6%。"
+            },
+            {
+                id: 33,
+                cat: 2,
+                title: "从 FDA MAUDE 数据库中探索健康信息技术事件的检索策略",
+                journal: "Stud Health Technol Inform (2018年)",
+                pmid: "29857426",
+                authors: "Yao B, Kang H, Wang J, Zhou S, Gong Y",
+                keywords: ["Product Code", "分类代码", "信息技术事件", "检索召回率"],
+                abstract: "以往的 Health IT 检索过度依赖品牌和厂家关键字，本研究引入并探索了 Classification Product Code 这一分类代码字段。通过与文本特征的结合，绘制了产品代码的分布图谱，极大优化了 MAUDE 中 HIT 事件的二级检索召回率。"
+            },
+            {
+                id: 34,
+                cat: 2,
+                title: "经导管瓣膜介入术的注册研究数据与 FDA MAUDE 安全监测数据的匹配度对比",
+                journal: "Am Heart J (2018年4月)",
+                pmid: "29653650",
+                authors: "Galper BZ, Leighton G, Englander LL",
+                keywords: ["经导管主动脉瓣置换", "MitraClip", "主动登记库", "被动监测关联"],
+                abstract: "探讨了主动登记库（TVT）与被动报告库（MAUDE）之间的统计偏差。应用自然语言处理技术提取并归纳了数千份心脏瓣膜植入报告，通过回归分析证实，利用 NLP 从 MAUDE 被动报告库中提取的各类不良反应发生率，与官方高成本的 TVT 主动登记库数据高度相关（R² > 0.96），表明自动 NLP 上市后监测在经济性和实效性上的巨大优势。"
+            },
+            {
+                id: 35,
+                cat: 2,
+                title: "调查与枕神经刺激相关的并发症：一项 MAUDE 研究",
+                journal: "Neuromodulation (2018年4月)",
+                pmid: "29345415",
+                authors: "Doran J, Ward M, Mammis A",
+                keywords: ["枕神经刺激", "电极移位", "硬体失效", "真实世界预后"],
+                abstract: "分析 10 年间涉及枕神经刺激的 1233 起事件。通过对患者主诉和硬件失效模式进行分类，发现 822 例为手术后可修复问题（电极移位 206 例、电极磨损 157 例、感染 155 例）。这为缺乏该领域长期临床试验的临床医生提供了真实世界的并发症预期参考。"
+            },
+            {
+                id: 36,
+                cat: 2,
+                title: "经皮肾镜取石术（PCNL）期间的器械相关不良事件分析",
+                journal: "J Endourol (2017年10月)",
+                pmid: "28830243",
+                authors: "Patel NH, Schulman AA, Eshghi M",
+                keywords: ["PCNL手术", "球囊扩张导管", "操作者误用", "回归分析"],
+                abstract: "收集了 10 年间 PCNL 手术涉及的 218 起器械故障。采用标准化分类系统评定，81% 为轻微。回归分析表明球囊扩张导管的严重并发症发生率最高。此外，高达 54.8% 的器械故障归因于操作者误用，显示出医生培训的重要性。"
+            },
+            {
+                id: 37,
+                cat: 2,
+                title: "开发用于检验医疗器械不良事件的分类方案：以达芬奇手术系统为例",
+                journal: "J Endourol (2017年1月)",
+                pmid: "27806637",
+                authors: "Gupta P, Schomburg J, Nguyen A, Lund E, Konety BR",
+                keywords: ["达芬奇机器人", "严重度分类", "专家信度评估", "科室分布差异"],
+                abstract: "收集了 2009-2012 年间达芬奇手术机器人的 2837 起安全事件。邀请 14 名外科专家合作构建了一套严重度及器械因果相关性分类体系（信度中等，Kappa = 0.52），并据此指出了不同科室手术以及不同机械臂组件的不良事件严重度分布规律。泌尿外科相较妇产科呈现更高的重度事件特征。"
+            },
+
+            // 分类三 (38 - 41)
+            {
+                id: 38,
+                cat: 3,
+                title: "眼科植入物上市后监管：真实世界证据（RWE）的作用与技术演进",
+                journal: "Expert Rev Med Devices (2025年12月)",
+                pmid: "41123186",
+                keywords: ["眼科植入物", "上市后监管", "真实世界证据 (RWE)", "全球数据共享"],
+                authors: "Gurnani B, Kaur K",
+                abstract: "本综述探讨了眼科植入物（人工晶体、青光眼引流阀等）上市后监管从传统的“被动自发上报”模式向基于“真实世界证据（RWE）”的主动注册登记系统的演变。\n\n作者重点强调了引入人工智能数据挖掘分析技术，以及全球监管协调在早期快速发现安全性“微弱信号（weak signals）”中的核心贡献，以引导出更安全、以患者为中心的临床采购决策。"
+            },
+            {
+                id: 39,
+                cat: 3,
+                title: "机器人脊柱手术的隐伤：1346 起真实事件分析显示平均延时达 58 分钟并削弱了医院的财务可行性",
+                journal: "Spine J (2026年1月)",
+                pmid: "40628307",
+                authors: "Schneider D, Brown EDL, Elsamadicy AA, Sciubba DM, Lo SL",
+                keywords: ["脊柱手术机器人", "手术延时", "财务模型仿真", "价值主张验证"],
+                abstract: "目的：评估机器人操作故障等不良事件对医疗机构财务收支和手术流效率的综合负面冲击。\n\n方法：收集 2016-2025 年间报告至 MAUDE 数据库的 1,346 起机器人脊柱手术（MazorX 及 Globus）不良事件，通过建立手术延时、工作流中断及人工转换等参数，在 189 种医院 OR（手术室）财务管理场景中执行了模拟仿真。\n\n结果：不良事件导致单次手术平均延误高达 58.1 分钟，其中有 34.4% 的情况下不得不完全放弃机器人，手动转换回传统手术。尽管厂商以高精准度为核心卖点，但 66.4% 的并发症恰恰与精准度发生偏差相关。财务模拟显示，在目前器械故障率下，所有 189 种财务场景在其 7 年生命周期内都无法实现成本平衡，最优状况也要 33.8 年方可回收初始投资。\n\n结论：结果警告了脊柱手术机器人过度营销所宣称的效率与真实经济学状况之间的巨大落差，促使医院在采购新技术时必须保持理性的证据评估。"
+            },
+            {
+                id: 40,
+                cat: 3,
+                title: "全踝关节置换术后聚乙烯衬垫相关翻修事件的统计对比分析",
+                journal: "Foot Ankle Int (2023年1月)",
+                pmid: "36461676",
+                authors: "Jiang H, Wu L, Houck J, Sun L, Chow M, Peluso J, Peat R",
+                keywords: ["踝关节置换", "聚乙烯磨损", "移动平台 (MB)", "固定平台 (FB)"],
+                abstract: "方法：结合了智能文本挖掘和人工二次审查，对 1991-2020 年间 MAUDE 数据库中全踝关节置换涉及聚乙烯衬垫失效的 3,114 起报告执行了回顾性分析。\n\n结果：在 MB 设计（仅包含 STAR 假体）的 1841 份报告和 FB 设计（40 余个假体）的 1273 份报告中，MB 衬垫相关磨损率（33% 对比 24%）和衬垫碎裂率（11.3% 对比 0.2%）均明显高企。MB 设计的平均翻修发生时间为 4.1 年，显着早于 FB 的 5.2 年。\n\n结论：本研究通过大样本被动报告分析，揭示了移动平台设计可能伴随的早期磨损倾向，为骨科器械结构迭代及翻修策略提供了关键数据支撑。"
+            },
+            {
+                id: 41,
+                cat: 3,
+                title: "胰岛素给药非辅助连续血糖监测的安全性：基于海量 complaints 的隐患分析",
+                journal: "J Diabetes Sci Technol (2017年7月)",
+                pmid: "28540756",
+                authors: "Shapiro AR",
+                keywords: ["血糖监测仪 (CGM)", "非辅助给药", "传感器失准", "病人休克"],
+                abstract: "背景：随着血糖监视器（CGM）精确度的提升，FDA 曾批准了某些型号（如 Dexcom G5）可用于独立血糖参考（无需再采手指血复核）进行胰岛素给药。但这忽视了 CGM 在复杂日常中偶发的巨大偏差风险。\n\n方法：对 2015 年以来的 MAUDE 数据库执行了文本数据挖掘，检索到 25,000 余例由于传感器失准导致的患者投诉。\n\n结果：证实大量投诉存在数值严重偏离，多例直接导致了患者胰岛素注射错误并诱发了低血糖深度昏迷。结论警告了完全抛弃传统采血针辅助确认可能造成的严重隐患，建议保留必要的确认读数机制以保障病患安全。"
+            }
+        ];
+
+        // 页面视图切换逻辑
+        const btnClustering = document.getElementById("btnClustering");
+        const btnPapers = document.getElementById("btnPapers");
+        const panelClustering = document.getElementById("panelClustering");
+        const panelPapers = document.getElementById("panelPapers");
+        const mainTitle = document.getElementById("mainTitle");
+        const mainDesc = document.getElementById("mainDesc");
+
+        btnClustering.addEventListener("click", () => {
+            btnClustering.classList.add("active");
+            btnPapers.classList.remove("active");
+            panelClustering.classList.add("active");
+            panelPapers.classList.remove("active");
+            mainTitle.innerText = "FDA MAUDE 数据库研究方向聚类分析报告";
+            mainDesc.innerText = "汇总 2016-2026 过去十年间 PubMed 收录的关于 FDA 不良事件数据库数据挖掘、机器学习与生成式 AI 领域的全部学术研究。提供多维度聚类探索与交互式文献检索视角。";
+        });
+
+        btnPapers.addEventListener("click", () => {
+            btnPapers.classList.add("active");
+            btnClustering.classList.remove("active");
+            panelPapers.classList.add("active");
+            panelClustering.classList.remove("active");
+            mainTitle.innerText = "PubMed 文献中文译本数据库";
+            mainDesc.innerText = "针对过去十年检索到的 41 篇 MAUDE 数据库相关的自然语言处理、大模型和真实世界安全性文献，提供分类汇总与实时全文检索。";
+            renderPapers(papersData);
+        });
+
+        // 文献列表渲染逻辑
+        const paperListContainer = document.getElementById("paperListContainer");
+        const countAll = document.getElementById("countAll");
+        const count1 = document.getElementById("count1");
+        const count2 = document.getElementById("count2");
+        const count3 = document.getElementById("count3");
+        const searchResultCount = document.getElementById("searchResultCount");
+        const paperSearchInput = document.getElementById("paperSearchInput");
+        
+        let currentCategory = "all";
+        let searchQuery = "";
+
+        // 统计分类数量
+        function updateCategoryCounts() {
+            countAll.innerText = papersData.length;
+            count1.innerText = papersData.filter(p => p.cat === 1).length;
+            count2.innerText = papersData.filter(p => p.cat === 2).length;
+            count3.innerText = papersData.filter(p => p.cat === 3).length;
+        }
+        updateCategoryCounts();
+
+        function renderPapers(data) {
+            paperListContainer.innerHTML = "";
+            if (data.length === 0) {
+                paperListContainer.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 3rem; background: var(--card-bg); border-radius: 12px; border: 1px dashed var(--card-border);">没有找到符合检索条件的文献</div>`;
+                searchResultCount.innerText = `已匹配 0 篇文献`;
+                return;
+            }
+
+            searchResultCount.innerText = `已匹配 ${data.length} 篇文献`;
+
+            data.forEach(p => {
+                const card = document.createElement("div");
+                card.className = "paper-card";
+                card.setAttribute("data-id", p.id);
+
+                // 关键词标签
+                const kwHtml = p.keywords ? p.keywords.map(k => `<span class="keyword-tag">${k}</span>`).join("") : "";
+
+                // 构建卡片 HTML
+                card.innerHTML = `
+                    <div class="paper-header">
+                        <h4 class="paper-title">${p.id}. ${p.title}</h4>
+                        <a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}" target="_blank" class="pmid-badge" title="点击跳转至 PubMed 官方页面">PMID: ${p.pmid}</a>
+                    </div>
+                    <div class="paper-meta">
+                        <div class="meta-item"><strong>期刊日期:</strong> ${p.journal}</div>
+                        <div class="meta-item"><strong>主要作者:</strong> ${p.authors}</div>
+                    </div>
+                    <div class="keyword-row">${kwHtml}</div>
+                    <div>
+                        <button class="drawer-btn" onclick="toggleDrawer(${p.id})">
+                            <span class="drawer-icon">▼</span> 查看中文摘要与核心细节
+                        </button>
+                    </div>
+                    <div class="drawer-content" id="drawer-${p.id}">
+                        <div class="abstract-body">${formatAbstract(p.abstract)}</div>
+                    </div>
+                `;
+                paperListContainer.appendChild(card);
+            });
+        }
+
+        // 高亮重点标记摘要
+        function formatAbstract(text) {
+            // 对摘要中的重点，如“目的：”、“方法：”、“结果：”、“结论：”、“背景：”进行高亮标注
+            return text
+                .replace(/(目的：|OBJECTIVE:)/g, '<strong class="highlight">$1</strong>')
+                .replace(/(方法：|METHODS:)/g, '<strong class="highlight">$1</strong>')
+                .replace(/(结果：|RESULTS:)/g, '<strong class="highlight">$1</strong>')
+                .replace(/(结论：|CONCLUSIONS:|CONCLUSION:)/g, '<strong class="highlight">$1</strong>')
+                .replace(/(背景：|BACKGROUND:)/g, '<strong class="highlight">$1</strong>');
+        }
+
+        // 抽屉展开折叠
+        window.toggleDrawer = function(id) {
+            const drawer = document.getElementById(`drawer-${id}`);
+            const btn = drawer.previousElementSibling.querySelector(".drawer-btn");
+            const icon = btn.querySelector(".drawer-icon");
+            
+            if (drawer.classList.contains("open")) {
+                drawer.classList.remove("open");
+                icon.innerText = "▼";
+            } else {
+                drawer.classList.add("open");
+                icon.innerText = "▲";
+            }
+        };
+
+        // 多维度过滤与检索逻辑
+        function filterAndSearch() {
+            let filtered = papersData;
+            
+            // 1. 分类筛选
+            if (currentCategory !== "all") {
+                const catId = parseInt(currentCategory);
+                filtered = filtered.filter(p => p.cat === catId);
+            }
+
+            // 2. 关键词检索
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                filtered = filtered.filter(p => {
+                    return p.title.toLowerCase().includes(query) || 
+                           p.authors.toLowerCase().includes(query) || 
+                           p.pmid.includes(query) || 
+                           p.abstract.toLowerCase().includes(query) || 
+                           (p.keywords && p.keywords.some(k => k.toLowerCase().includes(query)));
+                });
+            }
+
+            renderPapers(filtered);
+        }
+
+        // 分类项点击绑定
+        document.querySelectorAll(".filter-item").forEach(item => {
+            item.addEventListener("click", (e) => {
+                document.querySelectorAll(".filter-item").forEach(i => i.classList.remove("active"));
+                const target = e.currentTarget;
+                target.classList.add("active");
+                currentCategory = target.getAttribute("data-cat");
+                filterAndSearch();
+            });
+        });
+
+        // 搜索框输入绑定
+        paperSearchInput.addEventListener("input", (e) => {
+            searchQuery = e.target.value.trim();
+            filterAndSearch();
+        });
+
+    </script>
+</body>
+</html>

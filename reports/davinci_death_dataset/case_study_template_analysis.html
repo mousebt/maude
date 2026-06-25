@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>报告</title>
+    
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --text-color: #1f2937;
+        --bg-color: #f9fafb;
+        --card-bg: #ffffff;
+        --border-color: #e5e7eb;
+        --code-bg: #f3f4f6;
+    }
+    
+    body {
+        font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.7;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        margin: 0;
+        padding: 40px 20px;
+    }
+    
+    .container {
+        max-width: 850px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        padding: 50px;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        border: 1px solid var(--border-color);
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+        color: #111827;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 15px;
+        margin-top: 0;
+        margin-bottom: 30px;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        color: #1f2937;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 8px;
+        font-weight: 700;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+        color: #374151;
+        margin-top: 30px;
+        font-weight: 600;
+    }
+    
+    p {
+        margin-bottom: 1.5rem;
+    }
+    
+    blockquote {
+        border-left: 4px solid var(--primary-color);
+        background-color: #eff6ff;
+        padding: 15px 20px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+        color: #1e40af;
+        font-style: italic;
+    }
+    
+    blockquote p {
+        margin: 0;
+    }
+    
+    blockquote strong {
+        color: #1d4ed8;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 30px 0;
+        font-size: 0.95rem;
+    }
+    
+    th, td {
+        border: 1px solid var(--border-color);
+        padding: 12px 15px;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #f8fafc;
+        font-weight: 600;
+        color: #334155;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+    
+    code {
+        font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        background-color: var(--code-bg);
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #d97706;
+    }
+    
+    pre {
+        background-color: #1e293b;
+        color: #f8fafc;
+        padding: 20px;
+        border-radius: 8px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin: 20px 0;
+    }
+    
+    pre code {
+        background-color: transparent;
+        padding: 0;
+        color: inherit;
+        font-size: 0.9em;
+    }
+    
+    ul, ol {
+        margin-bottom: 1.5rem;
+        padding-left: 25px;
+    }
+    
+    li {
+        margin-bottom: 0.5rem;
+    }
+    
+    @media print {
+        body {
+            background-color: #ffffff;
+            padding: 0;
+        }
+        .container {
+            box-shadow: none;
+            border: none;
+            padding: 0;
+            max-width: 100%;
+        }
+        h2, h3, table {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>FDA MAUDE 达芬奇致死病案描述文本结构化拆解示例 (MDR 2803906)</h1>
+<blockquote>
+<p><strong>研究案例 ID</strong>: MDR_REPORT_KEY 2803906
+<strong>判定分类</strong>: 机器物理故障致险/致死 (Shocking)
+<strong>技术支持</strong>: Antigravity AI 真实世界数据挖掘课题组</p>
+</blockquote>
+<hr />
+<h2>一、 病例原始描述 (Original Narrative Text)</h2>
+<blockquote>
+<p><strong>英文病志原文：</strong>
+AT THE BEGINNING OF THE SURGERY, WHILE EXPLORING THE PATIENT'S ABDOMEN, THE SOUND OF THE MONOPOLAR ESU WAS HEARD BY THE SURGEON, STAFF RN, AND DAVINCI REPRESENTATIVE. THE SURGEON STATED THAT SHE WASN'T DEPRESSING THE BIPOLAR FOOT PEDAL. PHYSICIAN PHONE STATEMENT NOTED THAT THIS INCIDENT OCCURRED AT THE VERY START OF THE CASE, AND THE FOOT PEDAL WAS NOT BEING ACTIVATED WHEN THE ESU WAS HEARD GOING OFF BY ITSELF; OBSERVE THE DAVINCI REP UNPLUGGING THE FOOT PEDALS CONNECTIONS FROM THE ROBOT AT THE REAR OF THE ESU. HEARD IT ACTIVATE AGAIN AFTER THIS WAS DONE. NURSE WHO WROTE UP INCIDENT STATEMENT SAYS SHE WAS ON THE OTHER SIDE OF THE ROOM, BUT DID HEAR THE ESU GOING OFF. SAYS SHE WAS THE PERSON WHO UNPLUGGED THE CABLES FROM THE FRONT OF THE DEVICE. SHE WAS NOT QUITE SURE IF THIS HAPPENED AT THE BEGINNING OR THE MIDDLE OF THE CASE. NURSE WITNESS STATEMENT: TWO DOCTORS WERE USING THE DAVINCI ROBOT CONSOLE; THEY WERE USING MONO-POLAR SETTING AT THAT MOMENT, HEARD WHEN PHYSICIAN SAY "WHY IS THE MONO-POLAR STILL GOING," SAID THAT SURGEON SAW SMOKE IN THE FIELD.SAW DAVINCI REP UN-PLUGGED THE CABLES FROM THE BACK OF THE FORCE FX ESU, SWITCHED OUT FORCE FX TO THE NEWER FORCE TRIAD ESU, CONTINUE WITH CASE.AS A RESULT OF WHAT APPEARS TO BE AN UNINTENDED DELIVERY OF MONOPOLAR ENERGY THROUGH A BIPOLAR MARYLAND CLAMP, THE PATIENT SUSTAINED A PERFORATED BOWEL, AND DESPITE CAREFUL EXAMINATION OF THE SURGICAL AREA, IT WAS NOT DISCOVERED UNTIL THE PATIENT CAME BACK TO THE HOSPITAL APPROXIMATELY A WEEK LATER WITH SIGNS OF INFECTION. THIS REQUIRED AN EXPLORATORY LAPAROTOMY, WHICH REVEALED A PERFORATED BOWEL.  A PORTION OF COLON WAS REMOVED AND SENT TO SURGICAL PATHOLOGY. PATIENT SUBSEQUENTLY DEVELOPED BILATERAL PULMONARY EMBOLI AND REMAINS HOSPITALIZED TO THIS DAY.</p>
+</blockquote>
+<hr />
+<h2>二、 中文忠实翻译 (Chinese Translation)</h2>
+<p>在手术开始阶段探查患者腹部时，主刀医生、手术室护士以及达芬奇技术代表都听到了单极高频发生器（ESU）被激活的声音。主刀医生声明她当时并没有踩下双极脚踏板。医生的电话陈述也证实，事件发生在手术刚开始时，当听到电刀自行启动发声时，脚踏板并未被激活；现场目击达芬奇技术代表从电刀主机后方拔掉了与机器人的脚踏板连接线，但此后仍能听到电刀再次自动激活。</p>
+<p>撰写事故报告的护士表示，她当时虽然在房间的另一侧，但也确实听到了电刀自行启动的声音，并表示是她从设备前方拔掉了电缆。她不太确定这发生在手术开始还是中间阶段。护士证词指出：当时有两位医生在使用达芬奇机器人控制台，正在使用单极模式，随后听到医生说“为什么单极电刀还在持续放电？”，并看到手术视野里冒烟。技术代表随后拔掉了 Force FX 电刀主机后方的电缆，并将 Force FX 更换为更新的 Force Triad 电刀系统后继续手术。</p>
+<p><strong>由于单极电能量意外通过双极 Maryland 电凝钳释放</strong>，导致患者发生了<strong>肠穿孔</strong>。尽管术中对非手术区域进行了仔细检查，但当时并未发现异常。直到约一周后，患者因出现感染迹象返回医院才被确诊。为此行剖腹探查术，证实了肠穿孔的存在。随后切除了部分结肠并送病理检查。患者此后并发了<strong>双侧肺栓塞</strong>，并在上报之日仍处于住院抢救状态（后确认死亡）。</p>
+<hr />
+<h2>三、 结构化字段拆解 Schema 映射 (JSON Mapping)</h2>
+<p>大模型清洗管道将非结构化病例描述文本，拆解为以下规范化的数据库结构化字段：</p>
+<pre><code class="language-json">{
+  &quot;mdr_report_key&quot;: 2803906,
+  &quot;classification&quot;: &quot;Shocking&quot;,
+  &quot;brand_name&quot;: &quot;DaVinci Standard (第一代)&quot;,
+  &quot;hazard_category&quot;: &quot;能量器械漏电/电弧/击穿/灼伤&quot;,
+  &quot;fault_component&quot;: &quot;Maryland Grasping (双极电凝钳)&quot;,
+  &quot;causal_chain&quot;: &quot;手术开始时单极电刀意外自行激活放电，能量意外通过双极Maryland钳释放，灼伤并导致患者肠穿孔，一周后发生腹腔感染行结肠切除，后并发双侧肺栓塞死亡。&quot;,
+  &quot;root_cause&quot;: &quot;单极能量通过双极Maryland钳旁路异常释放，导致隐蔽性热灼伤肠穿孔未被术中发现。&quot;,
+  &quot;clinical_complication&quot;: &quot;大出血 / 肠穿孔 / 术后肺栓塞&quot;,
+  &quot;surgeon_decision&quot;: &quot;YES&quot;,
+  &quot;factual_summary&quot;: &quot;单极电刀意外自行激活，能量通过双极Maryland钳旁路释放烧穿肠管，患者术后并发肺栓塞死亡。&quot;
+}
+</code></pre>
+<hr />
+<h2>四、 字段提取逻辑与原文对照解析 (Attribution Rationale)</h2>
+<ol>
+<li><strong>判定类型 (<code>classification</code>) $\rightarrow$ <code>Shocking (机器物理故障/故障致险)</code></strong><ul>
+<li><em>提取与判定逻辑</em>：原文中明确描述了“unintended delivery of monopolar energy”（非预期的单极电能释放）和“ESU going off by itself”（电刀自行激活），这属于明显的电气与硬件机械失效，直接贡献了致命风险，因此归入 Shocking 类。</li>
+</ul>
+</li>
+<li><strong>机型代际 (<code>brand_name</code>) $\rightarrow$ <code>DaVinci Standard (第一代)</code></strong><ul>
+<li><em>提取与判定逻辑</em>：原文提到了“Force FX ESU”和“Force Triad ESU”两款高频电刀发生器。在直觉外科公司（Intuitive Surgical）的产品配套历史中，这是第一代 DaVinci Classic/Standard 手术系统最为典型的配套电火花发生平台（2010年前后）。</li>
+</ul>
+</li>
+<li><strong>细分隐患类别 (<code>hazard_category</code>) $\rightarrow$ <code>能量器械漏电/电弧/击穿/灼伤</code></strong><ul>
+<li><em>提取与判定逻辑</em>：核心线索来自“delivery of monopolar energy through a bipolar Maryland clamp”（单极能量通过双极钳释放）。单极高频电流在非预期情况下传导到双极抓钳表面，发生旁路放电或电弧击穿，导致热灼伤。</li>
+</ul>
+</li>
+<li><strong>涉事具体组件 (<code>fault_component</code>) $\rightarrow$ <code>Maryland Grasping (双极电凝钳)</code></strong><ul>
+<li><em>提取与判定逻辑</em>：原文直接指出了承载并释放意外能量的机械臂附件为“bipolar Maryland clamp”。</li>
+</ul>
+</li>
+<li><strong>临床并发症 (<code>clinical_complication</code>) $\rightarrow$ <code>肠穿孔</code>、<code>术后肺栓塞</code></strong><ul>
+<li><em>提取与判定逻辑</em>：原文后半段指出患者的最终病情表现：“sustained a perforated bowel”（发生了肠道穿孔）和“developed bilateral pulmonary emboli”（并发了双侧肺栓塞）。</li>
+</ul>
+</li>
+<li><strong>医生救治决策 (<code>surgeon_decision</code>) $\rightarrow$ <code>YES (中转开放手术)</code></strong><ul>
+<li><em>提取与判定逻辑</em>：对应原文中“required an exploratory laparotomy”（需要进行开腹剖腹探查术，并切除结肠送检）。当术后发生肠穿孔感染时，医生做出了开腹中转抢救决策。</li>
+</ul>
+</li>
+<li><strong>物理因果链重构 (<code>causal_chain</code> / <code>root_cause</code>)</strong><ul>
+<li><em>时序推演逻辑</em>：<ol>
+<li><code>手术刚启动</code> ➔ 2. <code>单极高频电刀异常自行激活放电</code> ➔ 3. <code>电能通过双极Maryland电凝钳发生旁路电弧释放</code> ➔ 4. <code>患者肠壁发生隐蔽性热灼伤穿孔（术中探查未见异常）</code> ➔ 5. <code>一周后腹腔感染返回医院</code> ➔ 6. <code>中转开腹行结肠切除</code> ➔ 7. <code>术后制动/体弱并发双侧肺栓塞致死</code>。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+    </div>
+</body>
+</html>

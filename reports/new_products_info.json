@@ -1,0 +1,821 @@
+[
+    {
+        "code": "PKU",
+        "first_date": "2022/02/10",
+        "total_count": 37807,
+        "generic_name": "INSULIN PUMP SECONDARY DISPLAY",
+        "brand_name": "SMARTPHONE ANDROID APP: PUMP CONNECT",
+        "brand_name_zh": "胰岛素泵辅助显示应用",
+        "generic_name_zh": "胰岛素泵配件"
+    },
+    {
+        "code": "QZI",
+        "first_date": "2024/02/06",
+        "total_count": 5561,
+        "generic_name": "CARDIAC IRREVERSIBLE ELECTROPORATION SYSTEM CATHETER",
+        "brand_name": "FARAWAVE",
+        "brand_name_zh": "Farawave 心脏不可逆电穿孔系统导管",
+        "generic_name_zh": "心脏电穿孔消融导管"
+    },
+    {
+        "code": "QQS",
+        "first_date": "2022/04/22",
+        "total_count": 3602,
+        "generic_name": "STAPLE, REMOVABLE (SKIN)",
+        "brand_name": "WECK VISISTAT SKIN STAPLER 35R",
+        "brand_name_zh": "Weck Visistat 35R 皮肤缝合器",
+        "generic_name_zh": "皮肤缝合器"
+    },
+    {
+        "code": "SAF",
+        "first_date": "2024/09/09",
+        "total_count": 1755,
+        "generic_name": "INTEGRATED CONTINUOUS GLUCOSE MONITOR FOR NON-INTENSIVE GLUCOSE MONITORING, OVER",
+        "brand_name": "DEXCOM STELO CGM",
+        "brand_name_zh": "德康斯特洛持续葡萄糖监测系统",
+        "generic_name_zh": "用于非强化血糖监测的集成式持续葡萄糖监测仪"
+    },
+    {
+        "code": "QLT",
+        "first_date": "2021/08/04",
+        "total_count": 1693,
+        "generic_name": "COVID-19 MULTI-ANALYTE RESPIRATORY PANEL NUCLEIC ACID DEVICES",
+        "brand_name": "COBAS SARS-COV-2 & INFLUENZA A/B",
+        "brand_name_zh": "cobas SARS-CoV-2 及流感 A/B 病毒核酸检测试剂",
+        "generic_name_zh": "呼吸道多病原核酸检测试剂"
+    },
+    {
+        "code": "NPS",
+        "first_date": "2022/09/10",
+        "total_count": 1479,
+        "generic_name": "TRICUSPID VALVE REPAIR DEVICE, PERCUTANEOUSLY DELIVERED",
+        "brand_name": "TRICLIP G4 SYSTEM",
+        "brand_name_zh": "TriClip G4 三尖瓣修复系统",
+        "generic_name_zh": "经导管瓣膜修复系统"
+    },
+    {
+        "code": "SBA",
+        "first_date": "2024/10/26",
+        "total_count": 1190,
+        "generic_name": "EVERSENSE CONTINUOUS GLUCOSE MONITOR SYSTEM",
+        "brand_name": "EVERSENSE SENSOR",
+        "brand_name_zh": "Eversense 持续葡萄糖监测系统传感器",
+        "generic_name_zh": "持续葡萄糖监测传感器"
+    },
+    {
+        "code": "QYX",
+        "first_date": "2023/08/29",
+        "total_count": 669,
+        "generic_name": "DETECTOR AND ALARM, ARRHYTHMIA",
+        "brand_name": "ZIO AT",
+        "brand_name_zh": "心律失常检测报警器",
+        "generic_name_zh": "心电监测设备"
+    },
+    {
+        "code": "NPW",
+        "first_date": "2024/03/05",
+        "total_count": 466,
+        "generic_name": "PERCUTANEOUSLY DELIVERED PROSTHESES AND TRICUSPID VALVES",
+        "brand_name": "EVOQUE TRICUSPID VALVE REPLACEMENT SYSTEM",
+        "brand_name_zh": "Evoque 三尖瓣置换系统",
+        "generic_name_zh": "经导管瓣膜置换系统"
+    },
+    {
+        "code": "OOB",
+        "first_date": "2024/03/04",
+        "total_count": 371,
+        "generic_name": "DRUG-ELUTING PERCUTANEOUS TRANSLUMINAL CORONARY ANGIOPLASTY CATHETER",
+        "brand_name": "AGENT",
+        "brand_name_zh": "药物涂层经皮冠状动脉成形术导管",
+        "generic_name_zh": "冠状动脉介入导管"
+    },
+    {
+        "code": "QRF",
+        "first_date": "2023/04/17",
+        "total_count": 371,
+        "generic_name": "4K",
+        "brand_name": "4KSCORE TEST",
+        "brand_name_zh": "4Kscore前列腺癌检测试剂",
+        "generic_name_zh": "肿瘤标志物检测试剂"
+    },
+    {
+        "code": "QNR",
+        "first_date": "2021/07/01",
+        "total_count": 357,
+        "generic_name": "PUMP, BLOOD, CARDIOPULMONARY BYPASS, NON-ROLLER TYPE",
+        "brand_name": "PEDIMAG BLOOD PUMP",
+        "brand_name_zh": "佩迪玛格血泵",
+        "generic_name_zh": "血泵，心肺转流用，非滚柱式"
+    },
+    {
+        "code": "QLK",
+        "first_date": "2021/08/16",
+        "total_count": 341,
+        "generic_name": "REACTIV8 IMPLANTABLE PULSE GENERATOR",
+        "brand_name": "REACTIV8",
+        "brand_name_zh": "Reactiv8植入式脉冲发生器",
+        "generic_name_zh": "植入式脉冲发生器"
+    },
+    {
+        "code": "QQK",
+        "first_date": "2024/02/22",
+        "total_count": 307,
+        "generic_name": "NORMOTHERMIC MACHINE PERFUSION SYSTEM FOR THE PRESERVATION OF DONOR LIVERS PRIOR",
+        "brand_name": "TRANSMEDICS OCS FOR LIVER",
+        "brand_name_zh": "特兰斯麦迪克斯肝脏体外灌注系统",
+        "generic_name_zh": "用于供肝保存前的常温机器灌注系统"
+    },
+    {
+        "code": "QJY",
+        "first_date": "2021/09/13",
+        "total_count": 295,
+        "generic_name": "INFUSION PUMP, DRUG SPECIFIC, PHARMACY-FILLED",
+        "brand_name": "REMUNITY",
+        "brand_name_zh": "瑞穆尼蒂",
+        "generic_name_zh": "特定药物输注泵，药房预充式"
+    },
+    {
+        "code": "QSK",
+        "first_date": "2022/09/27",
+        "total_count": 269,
+        "generic_name": "THORAFLEX HYBRID",
+        "brand_name": "THORAFLEX HYBRID",
+        "brand_name_zh": "索拉弗莱克斯混合型",
+        "generic_name_zh": "索拉弗莱克斯混合型"
+    },
+    {
+        "code": "PBZ",
+        "first_date": "2022/09/16",
+        "total_count": 263,
+        "generic_name": "IMAGE PROCESSING DEVICE FOR ESTIMATION OF EXTERNAL BLOOD LOSS",
+        "brand_name": "TRITON AI",
+        "brand_name_zh": "特里顿人工智能",
+        "generic_name_zh": "用于估算体外失血量的图像处理设备"
+    },
+    {
+        "code": "QRL",
+        "first_date": "2022/12/27",
+        "total_count": 146,
+        "generic_name": "LANCET, BLOOD",
+        "brand_name": "LANCE DVC",
+        "brand_name_zh": "兰斯DVC",
+        "generic_name_zh": "采血针"
+    },
+    {
+        "code": "SFI",
+        "first_date": "2025/12/13",
+        "total_count": 142,
+        "generic_name": "SENSOR, GLUCOSE, INVASIVE, COMPONENT OF AUTOMATED INSULIN DELIVERY SYSTEM",
+        "brand_name": "SENSOR MMT-5120A SIMPLERA SYNC 5PK US",
+        "brand_name_zh": "传感器MMT-5120A 简化同步5件装（美国）",
+        "generic_name_zh": "有创葡萄糖传感器，自动胰岛素输送系统组件"
+    },
+    {
+        "code": "NXW",
+        "first_date": "2024/06/04",
+        "total_count": 133,
+        "generic_name": "STENT, INFRAPOPLITEAL, ABSORBABLE",
+        "brand_name": "ESPRIT BTK RX IDE",
+        "brand_name_zh": "埃斯普利特膝下可吸收支架（研究用器械）",
+        "generic_name_zh": "膝下动脉可吸收支架"
+    },
+    {
+        "code": "QWR",
+        "first_date": "2023/12/18",
+        "total_count": 130,
+        "generic_name": "SIMPLE POINT-OF-CARE DEVICE TO DETECT SAR-COV-2 NUCLEIC ACID TARGETS",
+        "brand_name": "ID NOW COVID-19 2.0 TEST KIT 24T JAPAN",
+        "brand_name_zh": "ID NOW COVID-19 2.0 检测试剂盒 24人份",
+        "generic_name_zh": "即时检测试剂盒"
+    },
+    {
+        "code": "QYT",
+        "first_date": "2024/01/25",
+        "total_count": 106,
+        "generic_name": "OVER-THE-COUNTER COVID-19 ANTIGEN TEST",
+        "brand_name": "FLOWFLEX OVER-THE-COUNTER COVID TEST",
+        "brand_name_zh": "弗洛弗莱克斯非处方新冠检测",
+        "generic_name_zh": "非处方新冠病毒抗原检测试剂"
+    },
+    {
+        "code": "QBO",
+        "first_date": "2022/12/07",
+        "total_count": 86,
+        "generic_name": "HIP INSTRUMENT - BROACH",
+        "brand_name": "ACTIS BROACH SIZE 7",
+        "brand_name_zh": "阿克蒂斯锉刀7号",
+        "generic_name_zh": "髋关节器械——骨锉"
+    },
+    {
+        "code": "QZK",
+        "first_date": "2024/07/02",
+        "total_count": 85,
+        "generic_name": "ENDOVASCULAR SYSTEM FOR TREATMENT OF THORACOABDOMINAL AND PARARENAL AORTIC LESIO",
+        "brand_name": "GORE EXCLUDER THORACOABDOMINAL BRANCH ENDOPROSTHESIS",
+        "brand_name_zh": "Gore Excluder 胸腹主动脉分支覆膜支架",
+        "generic_name_zh": "主动脉覆膜支架系统"
+    },
+    {
+        "code": "SCV",
+        "first_date": "2025/12/11",
+        "total_count": 84,
+        "generic_name": "MODULAR ELECTROMECHANICAL SURGICAL SYSTEM",
+        "brand_name": "HUGO RAS SYSTEM",
+        "brand_name_zh": "HUGO RAS模块化机电手术系统",
+        "generic_name_zh": "手术机器人系统"
+    },
+    {
+        "code": "PPB",
+        "first_date": "2023/04/12",
+        "total_count": 80,
+        "generic_name": "FOLEY CATHETER KIT (EXCLUDES HIV TESTING)",
+        "brand_name": "MEDLINE SILICONE FOLEY CATHETER TRAY",
+        "brand_name_zh": "美德琳硅胶弗利导尿管托盘",
+        "generic_name_zh": "弗利导尿管套件（不含HIV检测）"
+    },
+    {
+        "code": "QKL",
+        "first_date": "2023/04/26",
+        "total_count": 72,
+        "generic_name": "FAT TRANSFER",
+        "brand_name": "LIPOASPIRATE WASH SYSTEM",
+        "brand_name_zh": "脂肪洗涤系统",
+        "generic_name_zh": "脂肪移植系统"
+    },
+    {
+        "code": "QPB",
+        "first_date": "2022/01/26",
+        "total_count": 70,
+        "generic_name": "SYSTEM, SUCTION, LIPOPLASTY",
+        "brand_name": "VASERLIPO SYSTEM",
+        "brand_name_zh": "威塑吸脂系统",
+        "generic_name_zh": "吸脂手术系统"
+    },
+    {
+        "code": "QSZ",
+        "first_date": "2023/11/14",
+        "total_count": 68,
+        "generic_name": "Absorbable synthetic wound dressing",
+        "brand_name": "NOVOSORB BTM",
+        "brand_name_zh": "可吸收合成伤口敷料",
+        "generic_name_zh": "可吸收敷料"
+    },
+    {
+        "code": "QOI",
+        "first_date": "2022/02/16",
+        "total_count": 67,
+        "generic_name": "SAFEBREAK VASCULAR",
+        "brand_name": "SAFEBREAK VASCULAR",
+        "brand_name_zh": "安全断裂血管",
+        "generic_name_zh": "安全断裂血管"
+    },
+    {
+        "code": "OZG",
+        "first_date": "2024/02/29",
+        "total_count": 63,
+        "generic_name": "ASD OCCLUDER",
+        "brand_name": "FIGULLA FLEX II ASD OCCLUDER",
+        "brand_name_zh": "房间隔缺损封堵器（Figulla Flex II）",
+        "generic_name_zh": "房间隔缺损封堵器"
+    },
+    {
+        "code": "QBI",
+        "first_date": "2023/08/18",
+        "total_count": 56,
+        "generic_name": "ACUTE CORONARY SYNDROME EVENT DETECTOR",
+        "brand_name": "GUARDIAN SYSTEM",
+        "brand_name_zh": "守护者系统",
+        "generic_name_zh": "急性冠脉综合征事件检测器"
+    },
+    {
+        "code": "QBX",
+        "first_date": "2022/08/04",
+        "total_count": 55,
+        "generic_name": "DIRECT BLOOD BACTERIAL NUCLEIC ACID DETECTION SYSTEM",
+        "brand_name": "T2BACTERIA PANEL",
+        "brand_name_zh": "T2细菌检测板",
+        "generic_name_zh": "细菌核酸检测系统"
+    },
+    {
+        "code": "PQX",
+        "first_date": "2022/03/17",
+        "total_count": 51,
+        "generic_name": "TYPE 2",
+        "brand_name": "TWINJECT/ADRENACLICK",
+        "brand_name_zh": "双注射器/肾上腺素自动注射笔（2型）",
+        "generic_name_zh": "自动注射笔/注射器"
+    },
+    {
+        "code": "QOH",
+        "first_date": "2023/01/13",
+        "total_count": 50,
+        "generic_name": "EXTRACORPOREAL SYSTEM FOR CARBON DIOXIDE REMOVAL",
+        "brand_name": "HEMOLUNG RAS",
+        "brand_name_zh": "体外二氧化碳清除系统",
+        "generic_name_zh": "体外生命支持系统"
+    },
+    {
+        "code": "QGM",
+        "first_date": "2024/08/01",
+        "total_count": 46,
+        "generic_name": "Focused ultrasound system for non-thermal, mechanical tissue ablation",
+        "brand_name": "EDISON SYSTEM",
+        "brand_name_zh": "爱迪生系统",
+        "generic_name_zh": "用于非热、机械性组织消融的聚焦超声系统"
+    },
+    {
+        "code": "QOF",
+        "first_date": "2023/06/28",
+        "total_count": 46,
+        "generic_name": "MULTIPLE-GENUS RESPIRATORY VIRUS NUCLEIC ACID IVD, KIT, NUCLEIC ACID TECHNIQUE",
+        "brand_name": "BD RESPIRATORY VIRAL PANEL FOR BD MAX SYSTEM",
+        "brand_name_zh": "BD呼吸道病毒检测板（用于BD MAX系统）",
+        "generic_name_zh": "多属呼吸道病毒核酸体外诊断试剂盒，核酸技术"
+    },
+    {
+        "code": "QPQ",
+        "first_date": "2021/09/30",
+        "total_count": 46,
+        "generic_name": "SHOULDER SPACER FOR MASSIVE IRREPARABLE ROTATOR CUFF TEAR, RESORBABLE, INFLATABL",
+        "brand_name": "INSPACE BALLOON IMPLANT FOR SHOULDER",
+        "brand_name_zh": "英斯佩斯肩关节球囊植入物",
+        "generic_name_zh": "用于巨大不可修复肩袖撕裂的可吸收充气式肩关节间隔器"
+    },
+    {
+        "code": "QXH",
+        "first_date": "2025/07/09",
+        "total_count": 45,
+        "generic_name": "GALLBLADDER DRAINAGE STENT AND DELIVERY SYSTEM",
+        "brand_name": "AXIOS STENT AND ELECTROCAUTERY ENHANCED DELIVERY SYSTEM",
+        "brand_name_zh": "艾克希奥斯支架及电灼增强输送系统",
+        "generic_name_zh": "胆囊引流支架及输送系统"
+    },
+    {
+        "code": "QKW",
+        "first_date": "2023/04/24",
+        "total_count": 43,
+        "generic_name": "SHOULDER JOINT HUMERAL (HEMI-SHOULDER) CERAMIC HEAD/METALLIC STEM CEMENTED",
+        "brand_name": "TORNIER PYROCARBON HUM HEAD  DIA 54MMX23MMX4.0MM ECC HI",
+        "brand_name_zh": "托尼尔热解碳肱骨头 直径54mm×23mm×4.0mm 偏心高型",
+        "generic_name_zh": "肩关节肱骨头（半肩）陶瓷头/金属柄骨水泥型"
+    },
+    {
+        "code": "QWK",
+        "first_date": "2023/10/29",
+        "total_count": 43,
+        "generic_name": "MOTION-PRESERVING SPINAL IMPLANT",
+        "brand_name": "TOPS SYSTEM",
+        "brand_name_zh": "托普斯系统",
+        "generic_name_zh": "保留运动功能的脊柱植入物"
+    },
+    {
+        "code": "SEG",
+        "first_date": "2025/03/24",
+        "total_count": 43,
+        "generic_name": "LEADLESS CARDIAC RESYNCHRONIZATION THERAPY (CRT)",
+        "brand_name": "WISE CORTICAL STRIP WCS",
+        "brand_name_zh": "威斯皮层电极条",
+        "generic_name_zh": "无导线心脏再同步治疗（CRT）系统"
+    },
+    {
+        "code": "QLN",
+        "first_date": "2023/01/13",
+        "total_count": 40,
+        "generic_name": "EXTRACORPOREAL SYSTEM FOR CARBON DIOXIDE REMOVAL FOR THE TREATMENT OF  COVID-19",
+        "brand_name": "HEMOLUNG RAS",
+        "brand_name_zh": "血氧肺RAS",
+        "generic_name_zh": "用于治疗COVID-19的体外二氧化碳清除系统"
+    },
+    {
+        "code": "QJQ",
+        "first_date": "2023/05/03",
+        "total_count": 39,
+        "generic_name": "CRANIAL NEUROSTIMULATOR",
+        "brand_name": "FISHER WALLACE CRANIAL NEUROSTIMULATOR",
+        "brand_name_zh": "费希尔·华莱士颅神经刺激器",
+        "generic_name_zh": "颅神经刺激器"
+    },
+    {
+        "code": "QHW",
+        "first_date": "2022/12/21",
+        "total_count": 38,
+        "generic_name": "SINGLE LUMEN ECMO CANNULA",
+        "brand_name": "BIO-MEDICUS LIFE SUPPORT TM",
+        "brand_name_zh": "生物医学生命支持TM",
+        "generic_name_zh": "单腔ECMO插管"
+    },
+    {
+        "code": "QGH",
+        "first_date": "2021/12/20",
+        "total_count": 36,
+        "generic_name": "ELECTROCONVULSIVE THERAPY DEVICE FOR CATATONIA, MAJOR DEPRESSIVE DISORDER, AND B",
+        "brand_name": "ECT MACHINE",
+        "brand_name_zh": "电休克治疗仪",
+        "generic_name_zh": "用于紧张症、重度抑郁症及双相障碍的电抽搐治疗设备"
+    },
+    {
+        "code": "SFA",
+        "first_date": "2025/11/07",
+        "total_count": 34,
+        "generic_name": "TOUCH - CMC1 PROSTHESIS  CONICAL CUP 9MM",
+        "brand_name": "TOUCH CMC 1 PROSTHESIS",
+        "brand_name_zh": "触感CMC1假体",
+        "generic_name_zh": "触感CMC1假体 锥形杯9mm"
+    },
+    {
+        "code": "QRK",
+        "first_date": "2022/05/03",
+        "total_count": 33,
+        "generic_name": "LANCET",
+        "brand_name": "LIVONGO LANCET",
+        "brand_name_zh": "利文戈采血针",
+        "generic_name_zh": "采血针"
+    },
+    {
+        "code": "QUF",
+        "first_date": "2022/12/30",
+        "total_count": 33,
+        "generic_name": "HEARING AID, AIR-CONDUCTION, OVER THE COUNTER",
+        "brand_name": "HEARING AID",
+        "brand_name_zh": "助听器",
+        "generic_name_zh": "非处方气导助听器"
+    },
+    {
+        "code": "QWU",
+        "first_date": "2024/05/12",
+        "total_count": 33,
+        "generic_name": "PROSTHESIS, EYELID SPACER/GRAFT, POLYMER",
+        "brand_name": "CORNEAT EVERPATCH",
+        "brand_name_zh": "角膜永恒贴片",
+        "generic_name_zh": "聚合物眼睑间隔物/移植物假体"
+    },
+    {
+        "code": "QYI",
+        "first_date": "2024/04/04",
+        "total_count": 33,
+        "generic_name": "ABLATION CATHETER, RENAL DENERVATION",
+        "brand_name": "\\N",
+        "brand_name_zh": "未命名品牌",
+        "generic_name_zh": "ABLATION CATHETER, RENAL DENERVATION"
+    },
+    {
+        "code": "PFA",
+        "first_date": "2024/05/24",
+        "total_count": 31,
+        "generic_name": "UNO EWIS BLUE 60/9 HCAP 10PK INT",
+        "brand_name": "MEDTRONIC EXTENDED",
+        "brand_name_zh": "一次性使用内窥镜套管",
+        "generic_name_zh": "内窥镜附件"
+    },
+    {
+        "code": "QNI",
+        "first_date": "2024/02/27",
+        "total_count": 31,
+        "generic_name": "BEAR IMPLANT FOR ACL REPAIR",
+        "brand_name": "BRIDGE-ENHANCED ACL RESTORATION (BEAR) IMPLANT",
+        "brand_name_zh": "桥接增强前交叉韧带重建（BEAR）植入物",
+        "generic_name_zh": "用于前交叉韧带修复的BEAR植入物"
+    },
+    {
+        "code": "QAQ",
+        "first_date": "2021/09/10",
+        "total_count": 30,
+        "generic_name": "ADJUNCTIVE PREDICTIVE CARDIOVASCULAR INDICATOR",
+        "brand_name": "ACUMEN IQ SENSOR",
+        "brand_name_zh": "敏锐IQ传感器",
+        "generic_name_zh": "辅助性心血管预测指标"
+    },
+    {
+        "code": "QEP",
+        "first_date": "2021/12/01",
+        "total_count": 30,
+        "generic_name": "NUCLEIC ACID DETECTION SYSTEM FOR NON-VIRAL MICROORGANISM(S) CAUSING SEXUALLY TR",
+        "brand_name": "ALINITY M STI AMPLIFICATION REAGENT KIT",
+        "brand_name_zh": "ALINITY M STI扩增试剂盒",
+        "generic_name_zh": "用于检测性传播非病毒微生物的核酸检测系统"
+    },
+    {
+        "code": "QJA",
+        "first_date": "2021/09/10",
+        "total_count": 30,
+        "generic_name": "TYMPANOSTOMY TUBE DELIVERY PRODUCT WITH DRUG",
+        "brand_name": "TULA CONTROL UNIT SPARE",
+        "brand_name_zh": "TULA控制单元备件",
+        "generic_name_zh": "含药物的鼓膜造口管输送产品"
+    },
+    {
+        "code": "QLJ",
+        "first_date": "2021/09/15",
+        "total_count": 30,
+        "generic_name": "CONTINUOUS GLUCOSE MONITORING SYSTEM",
+        "brand_name": "FREESTYLE LIBRE 3",
+        "brand_name_zh": "连续血糖监测系统（Freestyle Libre 3）",
+        "generic_name_zh": "连续血糖监测系统"
+    },
+    {
+        "code": "QZZ",
+        "first_date": "2025/09/10",
+        "total_count": 30,
+        "generic_name": "ELEOS NANOCEPT TECHNOLOGY ANTIBACTERIAL  COATED MALE-FEMALE MIDSECTION SIZE 50MM",
+        "brand_name": "ELEOS LIMB SALVAGE SYSTEM",
+        "brand_name_zh": "埃利奥斯保肢系统",
+        "generic_name_zh": "ELEOS纳米技术抗菌涂层公母中段尺寸50mm"
+    },
+    {
+        "code": "QPT",
+        "first_date": "2022/12/13",
+        "total_count": 28,
+        "generic_name": "ECOIN UUI",
+        "brand_name": "ECOIN PERIPHERAL NUEROSTIMULATOR",
+        "brand_name_zh": "ECOIN外周神经刺激器",
+        "generic_name_zh": "ECOIN急迫性尿失禁治疗仪"
+    },
+    {
+        "code": "OQB",
+        "first_date": "2021/08/10",
+        "total_count": 27,
+        "generic_name": "INTERVERTEBRAL BODY GRAFT CONTAINMENT",
+        "brand_name": "OPTIMESH",
+        "brand_name_zh": "OPTIMESH网片",
+        "generic_name_zh": "椎体间移植物固定装置"
+    },
+    {
+        "code": "QLO",
+        "first_date": "2025/02/22",
+        "total_count": 27,
+        "generic_name": "SERAPH 100",
+        "brand_name": "SERAPH 100",
+        "brand_name_zh": "塞拉夫100",
+        "generic_name_zh": "塞拉夫100血液净化系统"
+    },
+    {
+        "code": "QTC",
+        "first_date": "2023/07/21",
+        "total_count": 25,
+        "generic_name": "FULL LENGTH BED RAILS",
+        "brand_name": "ROSCOE",
+        "brand_name_zh": "罗斯科",
+        "generic_name_zh": "全长床护栏"
+    },
+    {
+        "code": "QWM",
+        "first_date": "2023/12/11",
+        "total_count": 25,
+        "generic_name": "PERIPHERAL STENT GRAFT",
+        "brand_name": "DETOUR SYSTEM TORUS",
+        "brand_name_zh": "绕道系统环形支架",
+        "generic_name_zh": "外周覆膜支架"
+    },
+    {
+        "code": "JCE",
+        "first_date": "2024/04/18",
+        "total_count": 21,
+        "generic_name": "SOLUTION, ISOTONIC",
+        "brand_name": "SODIUM CHLORIDE, 0.9% (W/V) ISOTONIC SALINE",
+        "brand_name_zh": "0.9%氯化钠等渗盐水",
+        "generic_name_zh": "等渗溶液"
+    },
+    {
+        "code": "QEH",
+        "first_date": "2022/09/09",
+        "total_count": 21,
+        "generic_name": "PISTON SYRINGE",
+        "brand_name": "MDS-21NRFIT",
+        "brand_name_zh": "MDS-21NRFIT",
+        "generic_name_zh": "活塞注射器"
+    },
+    {
+        "code": "QXM",
+        "first_date": "2024/08/22",
+        "total_count": 21,
+        "generic_name": "IMPLANTED TIBIAL ELECTRICAL URINARY CONTINENCE DEVICE",
+        "brand_name": "REVI SYSTEM",
+        "brand_name_zh": "REVI系统",
+        "generic_name_zh": "植入式胫骨电刺激尿控装置"
+    },
+    {
+        "code": "FYI",
+        "first_date": "2022/08/22",
+        "total_count": 20,
+        "generic_name": "PERCUSSOR, POWERED-ELECTRIC",
+        "brand_name": "CONTROLLER, VEST 105",
+        "brand_name_zh": "背心式控制器105",
+        "generic_name_zh": "电动叩击器"
+    },
+    {
+        "code": "QSY",
+        "first_date": "2022/02/15",
+        "total_count": 20,
+        "generic_name": "MONSEL'S SOLUTION",
+        "brand_name": "ASTRINGYN 12 PACK BOX",
+        "brand_name_zh": "ASTRINGYN 12包装盒",
+        "generic_name_zh": "孟氏溶液"
+    },
+    {
+        "code": "QNW",
+        "first_date": "2022/07/07",
+        "total_count": 19,
+        "generic_name": "REPROCESSED BRONCHOSCOPE",
+        "brand_name": "MONARCH BRONCHOSCOPE",
+        "brand_name_zh": "MONARCH支气管镜",
+        "generic_name_zh": "再处理支气管镜"
+    },
+    {
+        "code": "QVG",
+        "first_date": "2024/02/27",
+        "total_count": 18,
+        "generic_name": "LAVA LIQUID EMBOLIC SYSTEM",
+        "brand_name": "LAVA-18, 6 ML",
+        "brand_name_zh": "LAVA-18, 6毫升",
+        "generic_name_zh": "LAVA液体栓塞系统"
+    },
+    {
+        "code": "SAK",
+        "first_date": "2024/02/13",
+        "total_count": 17,
+        "generic_name": "SOFTWARE",
+        "brand_name": "SEPSIS",
+        "brand_name_zh": "SEPSIS",
+        "generic_name_zh": "软件"
+    },
+    {
+        "code": "QIK",
+        "first_date": "2024/03/28",
+        "total_count": 16,
+        "generic_name": "ORGAN CARE SYSTEM (OCS) HEART SYSTEM",
+        "brand_name": "OCS HEART SYSTEM",
+        "brand_name_zh": "OCS心脏系统",
+        "generic_name_zh": "器官护理系统（OCS）心脏系统"
+    },
+    {
+        "code": "PXU",
+        "first_date": "2021/07/06",
+        "total_count": 15,
+        "generic_name": "FLUID DRAINAGE TRAY",
+        "brand_name": "PERICARDIOCENTESIS KIT.",
+        "brand_name_zh": "心包穿刺套件",
+        "generic_name_zh": "液体引流托盘"
+    },
+    {
+        "code": "QPY",
+        "first_date": "2023/05/10",
+        "total_count": 15,
+        "generic_name": "VIVISTIM SYSTEM",
+        "brand_name": "MICROTRANSPONDER VIVISTIM PAIRED VNS SYSTEM (VIVISTIM SYSTEM)",
+        "brand_name_zh": "MICROTRANSPONDER VIVISTIM配对VNS系统（VIVISTIM系统）",
+        "generic_name_zh": "VIVISTIM系统"
+    },
+    {
+        "code": "QRJ",
+        "first_date": "2022/10/11",
+        "total_count": 15,
+        "generic_name": "LASER-POWERED INFERIOR VENA CAVA FILTER RETRIEVAL",
+        "brand_name": "CAVACLEAR LASER SHEATH",
+        "brand_name_zh": "CAVACLEAR激光鞘",
+        "generic_name_zh": "激光驱动下腔静脉滤器回收装置"
+    },
+    {
+        "code": "QNN",
+        "first_date": "2023/10/06",
+        "total_count": 14,
+        "generic_name": "TITANIUM PATIENT SPECIFIC TALUS SPACER, SMALL",
+        "brand_name": "PATIENT SPECIFIC TALUS SPACER",
+        "brand_name_zh": "患者特异性距骨间隔器",
+        "generic_name_zh": "钛合金患者特异性距骨间隔器（小型）"
+    },
+    {
+        "code": "QAJ",
+        "first_date": "2022/04/19",
+        "total_count": 13,
+        "generic_name": "CUTANEOUS ELECTRODE STIMULATOR FOR URINARY INCONTINENCE",
+        "brand_name": "INNOVO, TYPE NUMBER 208",
+        "brand_name_zh": "INNOVO, 型号208",
+        "generic_name_zh": "皮肤电极尿失禁刺激器"
+    },
+    {
+        "code": "QVV",
+        "first_date": "2024/04/09",
+        "total_count": 13,
+        "generic_name": "IMPLANTED SHOCK ABSORBER",
+        "brand_name": "MISHA KNEE SYSTEM",
+        "brand_name_zh": "MISHA膝关节系统",
+        "generic_name_zh": "植入式减震器"
+    },
+    {
+        "code": "OFK",
+        "first_date": "2021/10/08",
+        "total_count": 12,
+        "generic_name": "PERCUTANEOUS ATRIAL CATHETER KIT",
+        "brand_name": "VERSACROSS STEERABLE ACCESS SOLUTION",
+        "brand_name_zh": "VERSACROSS可操控通路解决方案",
+        "generic_name_zh": "经皮心房导管套件"
+    },
+    {
+        "code": "PKN",
+        "first_date": "2021/09/15",
+        "total_count": 12,
+        "generic_name": "DILAPAN-S",
+        "brand_name": "DILAPAN-S",
+        "brand_name_zh": "DILAPAN-S",
+        "generic_name_zh": "DILAPAN-S"
+    },
+    {
+        "code": "QDO",
+        "first_date": "2025/05/09",
+        "total_count": 12,
+        "generic_name": "FENTANYL AND OTHER OPIOID PROTECTION GLOVE",
+        "brand_name": "GOODWORKS FENTANYL SAFE GLOVES",
+        "brand_name_zh": "GOODWORKS芬太尼安全手套",
+        "generic_name_zh": "芬太尼及其他阿片类药物防护手套"
+    },
+    {
+        "code": "QRH",
+        "first_date": "2023/01/25",
+        "total_count": 12,
+        "generic_name": "CATHETER, BALLOON, URETHRAL, DRUG-COATED",
+        "brand_name": "OPTILUME URETHRAL DRUG COATED BALLOON CATHETER",
+        "brand_name_zh": "OPTILUME尿道药物涂层球囊导管",
+        "generic_name_zh": "药物涂层尿道球囊导管"
+    },
+    {
+        "code": "GRM",
+        "first_date": "2023/10/17",
+        "total_count": 11,
+        "generic_name": "ANTISERA, ALL GROUPS, SALMONELLA SPP.",
+        "brand_name": "BD DIFCO SALMONELLA O ANTISERUM GROUP E FACTORS 1, 3, 10, 15, 19, 34",
+        "brand_name_zh": "BD DIFCO沙门氏菌O抗血清E群因子1、3、10、15、19、34",
+        "generic_name_zh": "沙门氏菌属抗血清（所有群）"
+    },
+    {
+        "code": "MWG",
+        "first_date": "2022/01/08",
+        "total_count": 11,
+        "generic_name": "SUPERSATURATED OXYGEN THERAPY SYSTEM CARTRIDGE",
+        "brand_name": "DOWNSTREAM CARTRIDGE",
+        "brand_name_zh": "DOWNSTREAM药筒",
+        "generic_name_zh": "过饱和氧疗系统药筒"
+    },
+    {
+        "code": "QIJ",
+        "first_date": "2021/11/03",
+        "total_count": 11,
+        "generic_name": "ENDOSCOPIC TRANSHEPATIC VENOUS ACCESS NEEDLE",
+        "brand_name": "ECHOTIP INSIGHT",
+        "brand_name_zh": "回声导引洞察",
+        "generic_name_zh": "内镜下经肝静脉穿刺针"
+    },
+    {
+        "code": "QUG",
+        "first_date": "2023/07/20",
+        "total_count": 11,
+        "generic_name": "HEARING AID, AIR-CONDUCTION WITH WIRELESS TECHNOLOGY, OVER THE COUNTER",
+        "brand_name": "JABRA ENHANCE 200 HEARING AID",
+        "brand_name_zh": "捷波朗增强200助听器",
+        "generic_name_zh": "非处方无线气导助听器"
+    },
+    {
+        "code": "QUH",
+        "first_date": "2023/05/04",
+        "total_count": 11,
+        "generic_name": "SELF-FITTING AIR-CONDUCTION HEARING AID, OVER THE COUNTER",
+        "brand_name": "EARGO HEARING DEVICES",
+        "brand_name_zh": "耳果助听设备",
+        "generic_name_zh": "非处方自调式气导助听器"
+    },
+    {
+        "code": "QKU",
+        "first_date": "2021/08/31",
+        "total_count": 10,
+        "generic_name": "NON-NIOSH-APPROVED DISPOSABLE FILTERING FACEPIECE RESPIRATORS (FFRS)",
+        "brand_name": "3PE-X127 NIOSH N95",
+        "brand_name_zh": "3PE-X127 NIOSH N95",
+        "generic_name_zh": "非NIOSH认证一次性过滤式面罩呼吸器"
+    },
+    {
+        "code": "QST",
+        "first_date": "2023/07/28",
+        "total_count": 10,
+        "generic_name": "LAB-BASED HIV NAT DIAGNOSTIC AND/OR SUPPLEMENTAL TEST",
+        "brand_name": "COBAS HIV-1/HIV-2 QUALITATIVE (192T)",
+        "brand_name_zh": "科巴斯HIV-1/HIV-2定性检测（192T）",
+        "generic_name_zh": "基于实验室的HIV核酸检测诊断和/或补充检测"
+    },
+    {
+        "code": "QVA",
+        "first_date": "2023/11/21",
+        "total_count": 10,
+        "generic_name": "RXM1000",
+        "brand_name": "REFLEXION MEDICAL RADIOTHERAPY SYSTEM",
+        "brand_name_zh": "反射医疗放射治疗系统",
+        "generic_name_zh": "RXM1000"
+    },
+    {
+        "code": "RAX",
+        "first_date": "2022/08/20",
+        "total_count": 10,
+        "generic_name": "\\N",
+        "brand_name": "\\N",
+        "brand_name_zh": "未命名品牌",
+        "generic_name_zh": "未知通用名"
+    }
+]

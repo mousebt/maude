@@ -1,0 +1,26 @@
+# 忽略私密配置文件（包含各类 API 密钥）
+.env
+
+# 忽略超大原始文本数据目录（避免数十GB数据阻塞Git）
+data/
+raw/
+
+# 忽略二进制序列化缓存文件
+*.pkl
+*.pkl.tmp
+stapler_research/data/
+
+# 忽略 Python 缓存与临时文件
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 忽略日志文件与系统生成任务
+logs/
+*.log
+.system_generated/
+
+# 忽略 OS 临时文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDA MAUDE 医疗器械不良事件全量数据底座大盘</title>
+    <meta name="description" content="基于本地MySQL 1.26亿行真实落盘数据的交互式多维基础统计与描述性分析仪表盘">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入 Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(20, 26, 46, 0.6);
+            --card-border: rgba(99, 102, 241, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0e17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #252d4a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3e4c7a;
+        }
+
+        /* 导航栏 */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: var(--gradient);
+            border-radius: 6px;
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 主容器 */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* 头部介绍 */
+        .intro-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .intro-section h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .intro-section p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 900px;
+        }
+
+        /* 计数卡片区 */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.1);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+        }
+
+        .metric-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-unit {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* 网格面板布局 */
+        .dashboard-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .dashboard-row.equal-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-row, .dashboard-row.equal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+        }
+
+        /* 列表/卡片排行样式 */
+        .rank-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .rank-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .rank-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .rank-badge {
+            width: 1.75rem;
+            height: 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            background: #252d4a;
+            color: var(--text-main);
+        }
+
+        .rank-badge.top-1 { background: var(--accent); color: #0b0f19; }
+        .rank-badge.top-2 { background: #cbd5e1; color: #0b0f19; }
+        .rank-badge.top-3 { background: #b45309; color: var(--text-main); }
+
+        .rank-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .rank-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-val {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: right;
+            margin-left: 0.5rem;
+        }
+
+        /* 宽表格区 */
+        .table-card {
+            width: 100%;
+        }
+
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            gap: 1rem;
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.85rem;
+            outline: none;
+            width: 300px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.25);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+        }
+
+        td {
+            color: var(--text-muted);
+        }
+
+        .highlight-cell {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon"></div>
+            <div class="logo-text">MAUDE ANALYTICS</div>
+        </div>
+        <nav>
+            <a href="#metrics" class="active">指标大盘</a>
+            <a href="#trend">趋势对比</a>
+            <a href="#distribution">构成分布</a>
+            <a href="#risk-rank">风险排行</a>
+            <a href="#raw-table">年度宽表</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 头部介绍 -->
+        <section class="intro-section" id="metrics">
+            <h1>FDA MAUDE 数据底座与描述性分析大盘</h1>
+            <p>基于本地 MySQL <code>maude_db</code> 数据库共 <strong>1.26 亿余行</strong> 全量清洗落盘数据的多维年度汇总分析。本系统采用高速 TSV 分流导入及索引树深度优化方案构建，提供药械警戒及自然语言挖掘分析的基础统计支撑。</p>
+        </section>
+
+        <!-- 计数器卡片 -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">主报告表 (mdr_report)</div>
+                <div class="metric-value">23,632,724</div>
+                <div class="metric-unit">行物理落盘数据</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">患者表 (patient)</div>
+                <div class="metric-value">23,619,555</div>
+                <div class="metric-unit">行临床患者档案</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">设备表 (device)</div>
+                <div class="metric-value">23,674,904</div>
+                <div class="metric-unit">行事件涉及器械名录</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">自由文本表 (foi_text)</div>
+                <div class="metric-value">54,688,722</div>
+                <div class="metric-unit">条不良事件文字记录</div>
+            </div>
+        </section>
+
+        <!-- 趋势对比 -->
+        <section class="card" id="trend">
+            <div class="card-header">
+                <div class="card-title">FDA MAUDE 历史不良事件发生与文字上报趋势 (1997 - 2025)</div>
+            </div>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </section>
+
+        <!-- 构成分布 -->
+        <section class="dashboard-row equal-grid" id="distribution">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">不良事件严重后果分布 (EVENT_TYPE)</div>
+                </div>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="outcomeChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">自由描述超长“暗数据”物理特征 (foi_text_overflow)</div>
+                </div>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="overflowChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 风险排行 -->
+        <section class="dashboard-row" id="risk-rank">
+            <div class="card" style="grid-column: span 1;">
+                <div class="card-header">
+                    <div class="card-title">医疗器械产品代码 (Product Code) 不良事件风险 Top 10</div>
+                </div>
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="productChart"></canvas>
+                </div>
+            </div>
+            <div class="card" style="grid-column: span 1;">
+                <div class="card-header">
+                    <div class="card-title">高危器械及典型代表品牌名录</div>
+                </div>
+                <div class="rank-list" id="rankList">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 年度数据汇总表 -->
+        <section class="card table-card" id="raw-table">
+            <div class="card-header" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div class="card-title">MAUDE 年度数据底座大宽表</div>
+                <div class="table-toolbar">
+                    <input type="text" id="tableSearch" class="search-input" placeholder="输入年份快速过滤... (例: 2024)">
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="yearlyTable">
+                    <thead>
+                        <tr>
+                            <th>年份</th>
+                            <th>主表 (mdr_report) 记录数</th>
+                            <th>患者表 (patient) 记录数</th>
+                            <th>历史设备文件 (device) 导入行数</th>
+                            <th>自由描述文本 (foi_text) 导入行数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="yearlyTableBody">
+                        <!-- 由 JavaScript 填充 -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 FDA MAUDE 医疗器械不良事件警戒分析项目</p>
+        <p>数据底座清洗优化方案与交互式多维分析技术支持: Antigravity AI Agent & 智囊专家组</p>
+    </footer>
+
+    <script>
+        // 1. 注入原始数据 (年度汇总宽表数据)
+        const rawTableData = [
+            { yr: "2025 年", mdr: 2887989, pat: 2887721, dev: 2887989, foi: 6474366 },
+            { yr: "2024 年", mdr: 2627114, pat: 2626281, dev: 2629374, foi: 6092428 },
+            { yr: "2023 年", mdr: 2339813, pat: 2339826, dev: 2345006, foi: 5445995 },
+            { yr: "2022 年", mdr: 2945665, pat: 2940394, dev: 2954980, foi: 6640117 },
+            { yr: "2021 年", mdr: 2028313, pat: 2017115, dev: 2032835, foi: 4872211 },
+            { yr: "2020 年", mdr: 1564999, pat: 1564844, dev: 1567919, foi: 4020738 },
+            { yr: "2019 年", mdr: 1328954, pat: 1329162, dev: 1331843, foi: 3467461 },
+            { yr: "2018 年", mdr: 1047946, pat: 1048221, dev: 1046450, foi: 2844294 },
+            { yr: "2017 年", mdr: 936884,  pat: 936942,  dev: 935347,  foi: 2423096 },
+            { yr: "2016 年", mdr: 867422,  pat: 867524,  dev: 866854,  foi: 2210045 },
+            { yr: "2015 年", mdr: 861789,  pat: 861905,  dev: 862246,  foi: 2074007 },
+            { yr: "2014 年", mdr: 862078,  pat: 862236,  dev: 863977,  foi: 1948386 },
+            { yr: "2013 年", mdr: 679683,  pat: 679822,  dev: 683361,  foi: 1609333 },
+            { yr: "2012 年", mdr: 486250,  pat: 486392,  dev: 487771,  foi: 1167622 },
+            { yr: "2011 年", mdr: 445308,  pat: 445695,  dev: 446879,  foi: 1040281 },
+            { yr: "2010 年", mdr: 303247,  pat: 303885,  dev: 304404,  foi: 635655 },
+            { yr: "2009 年", mdr: 241932,  pat: 239656,  dev: 243106,  foi: 428943 },
+            { yr: "2008 年", mdr: 194467,  pat: 195367,  dev: 195473,  foi: 313089 },
+            { yr: "2007 年", mdr: 171325,  pat: 171780,  dev: 172204,  foi: 277633 },
+            { yr: "2006 年", mdr: 119642,  pat: 120193,  dev: 120485,  foi: 164360 },
+            { yr: "2005 年", mdr: 98938,   pat: 99425,   dev: 99769,   foi: 108667 },
+            { yr: "2004 年", mdr: 81806,   pat: 81992,   dev: 82886,   foi: 89212 },
+            { yr: "2003 年", mdr: 77009,   pat: 77141,   dev: 77948,   foi: 66240 },
+            { yr: "2002 年", mdr: 69596,   pat: 69732,   dev: 70383,   foi: 64858 },
+            { yr: "2001 年", mdr: 58391,   pat: 58517,   dev: 59066,   foi: 58946 },
+            { yr: "2000 年", mdr: 52569,   pat: 52741,   dev: 53113,   foi: 52624 },
+            { yr: "1999 年", mdr: 52909,   pat: 53248,   dev: 52880,   foi: 51118 },
+            { yr: "1998 年", mdr: 61652,   pat: 61897,   dev: 63440,   foi: 68315 },
+            { yr: "1997 年", mdr: 77691,   pat: 78076,   dev: 136916,  foi: 91008 },
+            { yr: "1996 年", mdr: 32789,   pat: 33253,   dev: 0,       foi: 32058 },
+            { yr: "1995 年", mdr: 9758,    pat: 9761,    dev: 0,       foi: 27400 },
+            { yr: "1994 年", mdr: 11271,   pat: 11274,   dev: 0,       foi: 0 },
+            { yr: "1993 年", mdr: 4409,    pat: 4412,    dev: 0,       foi: 0 },
+            { yr: "1992 年", mdr: 3098,    pat: 3098,    dev: 0,       foi: 0 },
+            { yr: "1991 年", mdr: 15,      pat: 15,      dev: 0,       foi: 0 },
+            { yr: "1900 年", mdr: 1,       pat: 0,       dev: 0,       foi: 0 },
+            { yr: "5040 年", mdr: 1,       pat: 0,       dev: 0,       foi: 0 },
+            { yr: "7960 年", mdr: 1,       pat: 0,       dev: 0,       foi: 0 }
+        ];
+
+        // 2. 注入临床后果数据 (EVENT_TYPE)
+        const outcomeData = {
+            labels: ['设备故障 (M)', '患者伤害 (IN)', '患者死亡 (D)', '其他事件 (O)', '缺失/未标记'],
+            values: [14633442, 8615719, 221178, 101556, 60829],
+            colors: ['#6366f1', '#10b981', '#ef4444', '#f59e0b', '#4b5563']
+        };
+
+        // 3. 注入暗数据长度区间数据 (foi_text_overflow)
+        const overflowData = {
+            labels: ['4,000 ~ 6,000 字', '6,000 ~ 10,000 字', '10,000 字以上'],
+            values: [111915, 35356, 24513],
+            colors: ['#8b5cf6', '#d946ef', '#ec4899']
+        };
+
+        // 4. 注入器械产品排行 Top 10
+        const productTop10 = [
+            { code: "DZE", name: "牙科种植体 (ROOT-FORM)", brand: "SYBRONPRO TL / NOBEL", count: 3412638 },
+            { code: "QBJ", name: "动态血糖监测仪", brand: "DEXCOM G7 / G6 SYSTEM", count: 1806811 },
+            { code: "FRN", name: "输液泵", brand: "FLOGARD / BAXTER PUMP", count: 1797169 },
+            { code: "QFG", name: "胰岛素输注泵", brand: "OMNIPOD 5 POD / DASH", count: 1024229 },
+            { code: "OYC", name: "胰岛素输入泵", brand: "PARADIGM REAL-TIME PUMP", count: 884990 },
+            { code: "OZP", name: "带监测感应胰岛素泵", brand: "MINIMED 670G PUMP", count: 813562 },
+            { code: "LZG", name: "胰岛素注射泵", brand: "OMNIPOD SYSTEM PUMP", count: 533233 },
+            { code: "OZO", name: "胰岛素泵及系统", brand: "MINIMED 530G PUMP", count: 438513 },
+            { code: "NBW", name: "血糖监测系统", brand: "FREESTYLE LITE / OPTIUM", count: 428884 },
+            { code: "LWS", name: "植入式除颤器 (ICD)", brand: "VITALITY / CONTRAC", count: 365980 }
+        ];
+
+        // 填充表格
+        const tbody = document.getElementById("yearlyTableBody");
+        function renderTable(data) {
+            tbody.innerHTML = "";
+            data.forEach(r => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="highlight-cell">${r.yr}</td>
+                    <td>${r.mdr > 0 ? r.mdr.toLocaleString() : "-"}</td>
+                    <td>${r.pat > 0 ? r.pat.toLocaleString() : "-"}</td>
+                    <td>${r.dev > 0 ? r.dev.toLocaleString() : "-"}</td>
+                    <td>${r.foi > 0 ? r.foi.toLocaleString() : "-"}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        renderTable(rawTableData);
+
+        // 表格搜索功能
+        document.getElementById("tableSearch").addEventListener("input", function(e) {
+            const val = e.target.value.trim().toLowerCase();
+            const filtered = rawTableData.filter(r => r.yr.toLowerCase().includes(val));
+            renderTable(filtered);
+        });
+
+        // 填充器械排行卡片列表
+        const rankListContainer = document.getElementById("rankList");
+        productTop10.forEach((item, index) => {
+            const div = document.createElement("div");
+            div.className = "rank-item";
+            div.innerHTML = `
+                <div class="rank-badge ${index === 0 ? 'top-1' : index === 1 ? 'top-2' : index === 2 ? 'top-3' : ''}">${index + 1}</div>
+                <div class="rank-info">
+                    <div class="rank-name">${item.name} (${item.code})</div>
+                    <div class="rank-desc">代表品牌: ${item.brand}</div>
+                </div>
+                <div class="rank-val">${item.count.toLocaleString()} 件</div>
+            `;
+            rankListContainer.appendChild(div);
+        });
+
+        // ================= CHART.JS 渲染逻辑 =================
+
+        // 1. 折线图 (趋势对比)
+        // 过滤异常/超前年份，仅绘制 1997 - 2025 的趋势
+        const trendFiltered = rawTableData
+            .filter(r => {
+                const yrNum = parseInt(r.yr);
+                return yrNum >= 1997 && yrNum <= 2025;
+            })
+            .reverse(); // 由远及近绘制
+
+        const trendYears = trendFiltered.map(r => r.yr.replace(" 年", ""));
+        const mdrTrend = trendFiltered.map(r => r.mdr);
+        const patTrend = trendFiltered.map(r => r.pat);
+        const devTrend = trendFiltered.map(r => r.dev);
+        const foiTrend = trendFiltered.map(r => r.foi);
+
+        const ctxTrend = document.getElementById('trendChart').getContext('2d');
+        new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+                labels: trendYears,
+                datasets: [
+                    {
+                        label: '描述文本 (foi_text)',
+                        data: foiTrend,
+                        borderColor: '#a855f7',
+                        backgroundColor: 'rgba(168, 85, 247, 0.05)',
+                        tension: 0.35,
+                        borderWidth: 2.5,
+                        pointRadius: 2,
+                        fill: true
+                    },
+                    {
+                        label: '设备名录 (device)',
+                        data: devTrend,
+                        borderColor: '#0284c7',
+                        tension: 0.35,
+                        borderWidth: 2,
+                        pointRadius: 2
+                    },
+                    {
+                        label: '主报告表 (mdr_report)',
+                        data: mdrTrend,
+                        borderColor: '#6366f1',
+                        tension: 0.35,
+                        borderWidth: 2,
+                        pointRadius: 2
+                    },
+                    {
+                        label: '患者表 (patient)',
+                        data: patTrend,
+                        borderColor: '#10b981',
+                        tension: 0.35,
+                        borderWidth: 2,
+                        pointRadius: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#e5e7eb', font: { family: 'Outfit, Noto Sans SC' } }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        padding: 12
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#9ca3af' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { 
+                            color: '#9ca3af',
+                            callback: function(value) {
+                                return (value / 1000000).toFixed(1) + ' M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. 环形图 (严重程度后果分布)
+        const ctxOutcome = document.getElementById('outcomeChart').getContext('2d');
+        new Chart(ctxOutcome, {
+            type: 'doughnut',
+            data: {
+                labels: outcomeData.labels,
+                datasets: [{
+                    data: outcomeData.values,
+                    backgroundColor: outcomeData.colors,
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { color: '#e5e7eb', font: { family: 'Outfit, Noto Sans SC' } }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // 3. 柱状图 (超长暗数据物理特征)
+        const ctxOverflow = document.getElementById('overflowChart').getContext('2d');
+        new Chart(ctxOverflow, {
+            type: 'bar',
+            data: {
+                labels: overflowData.labels,
+                datasets: [{
+                    data: overflowData.values,
+                    backgroundColor: overflowData.colors,
+                    borderRadius: 6,
+                    borderWidth: 0,
+                    barThickness: 35
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9ca3af' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#9ca3af' }
+                    }
+                }
+            }
+        });
+
+        // 4. 横向条形图 (高危器械产品代码 Top 10)
+        const productLabels = productTop10.map(item => `${item.name} (${item.code})`);
+        const productValues = productTop10.map(item => item.count);
+
+        const ctxProduct = document.getElementById('productChart').getContext('2d');
+        new Chart(ctxProduct, {
+            type: 'bar',
+            data: {
+                labels: productLabels,
+                datasets: [{
+                    data: productValues,
+                    backgroundColor: 'rgba(99, 102, 241, 0.75)',
+                    hoverBackgroundColor: '#6366f1',
+                    borderRadius: 4,
+                    barThickness: 16
+                }]
+            },
+            options: {
+                indexAxis: 'y', // 横向柱状图
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: {
+                            color: '#9ca3af',
+                            callback: function(value) {
+                                return (value / 1000000).toFixed(1) + ' M';
+                            }
+                        }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { 
+                            color: '#e5e7eb',
+                            font: { size: 10 }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 导航栏平滑滑动交互
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+[
+  {
+    "mdr_report_key": "1961834",
+    "category": "Normal",
+    "duration_seconds": 2.83,
+    "tokens_used": {
+      "input": 476,
+      "output": 79
+    },
+    "structured_data": {
+      "clinical_complication": "大出血",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "未提及",
+      "clinical_summary": "术中遇异常静脉丛出血，止血后完成手术；术后5天再出血死亡，医生认为与机器人无关，系统无故障。"
+    }
+  },
+  {
+    "mdr_report_key": "1980770",
+    "category": "Normal",
+    "duration_seconds": 3.45,
+    "tokens_used": {
+      "input": 616,
+      "output": 84
+    },
+    "structured_data": {
+      "clinical_complication": "大出血",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "未提及",
+      "clinical_summary": "患者术后10天因手术区域出血死亡，术中癌症分期为T3，机器人系统无故障，医生认为出血与愈合延迟有关，与机器人无关。"
+    }
+  },
+  {
+    "mdr_report_key": "2023904",
+    "category": "Normal",
+    "duration_seconds": 3.15,
+    "tokens_used": {
+      "input": 735,
+      "output": 78
+    },
+    "structured_data": {
+      "clinical_complication": "大出血",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "未提及",
+      "clinical_summary": "舌根切除术后8天因迟发性出血死亡，医生认为出血与伤口愈合问题有关，达芬奇系统工作正常。"
+    }
+  },
+  {
+    "mdr_report_key": "2066439",
+    "category": "Normal",
+    "duration_seconds": 3.35,
+    "tokens_used": {
+      "input": 480,
+      "output": 90
+    },
+    "structured_data": {
+      "clinical_complication": "大出血",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "YES",
+      "clinical_summary": "二尖瓣修复术后血压下降，医生行小切口开胸发现瓣膜漏，转正中开胸修复，但患者因大出血未及修复而死亡。机器人系统无故障。"
+    }
+  },
+  {
+    "mdr_report_key": "2192397",
+    "category": "Normal",
+    "duration_seconds": 3.02,
+    "tokens_used": {
+      "input": 606,
+      "output": 79
+    },
+    "structured_data": {
+      "clinical_complication": "术后感染",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "YES",
+      "clinical_summary": "患者术后因肠穿孔导致脓毒症死亡，机器人系统无故障，医生未关闭腹膜可能为诱因，但确切原因未知。"
+    }
+  },
+  {
+    "mdr_report_key": "2241885",
+    "category": "Normal",
+    "duration_seconds": 4.14,
+    "tokens_used": {
+      "input": 485,
+      "output": 77
+    },
+    "structured_data": {
+      "clinical_complication": "术后感染",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "YES",
+      "clinical_summary": "患者术后两天因腹痛返回医院，行开腹探查确诊脓毒症，最终死亡。机器人系统未导致或贡献事件。"
+    }
+  },
+  {
+    "mdr_report_key": "2250270",
+    "category": "Normal",
+    "duration_seconds": 3.16,
+    "tokens_used": {
+      "input": 679,
+      "output": 85
+    },
+    "structured_data": {
+      "clinical_complication": "术后感染",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "YES",
+      "clinical_summary": "患者因卵巢囊肿切除术中粘连严重中转开腹，术后2-3周发生肠梗阻，最终死亡。机器人系统无故障，死因与手术并发症相关。"
+    }
+  },
+  {
+    "mdr_report_key": "2269019",
+    "category": "Normal",
+    "duration_seconds": 3.95,
+    "tokens_used": {
+      "input": 468,
+      "output": 79
+    },
+    "structured_data": {
+      "clinical_complication": "大出血",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "未提及",
+      "clinical_summary": "术后56小时突发大出血导致心脏骤停，复苏后因缺氧性脑损伤死亡，术中机器人无故障，出血原因未明。"
+    }
+  },
+  {
+    "mdr_report_key": "2400903",
+    "category": "Normal",
+    "duration_seconds": 3.25,
+    "tokens_used": {
+      "input": 404,
+      "output": 78
+    },
+    "structured_data": {
+      "clinical_complication": "大出血",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "未提及",
+      "clinical_summary": "患者术后数天出现术区出血死亡，机器人无故障报告，死因可能为术后迟发性出血，与机器人无关。"
+    }
+  },
+  {
+    "mdr_report_key": "2413676",
+    "category": "Normal",
+    "duration_seconds": 3.22,
+    "tokens_used": {
+      "input": 388,
+      "output": 75
+    },
+    "structured_data": {
+      "clinical_complication": "术后感染",
+      "robot_involvement": "无关联（机器工作完好且无阻碍）",
+      "surgeon_decision": "未提及",
+      "clinical_summary": "患者在接受达芬奇辅助子宫切除术后死于肺栓塞，手术期间机器人系统无故障，死因待查。"
+    }
+  },
+  {
+    "mdr_report_key": "2065919",
+    "category": "Shocking",
+    "duration_seconds": 3.72,
+    "tokens_used": {
+      "input": 2099,
+      "output": 146
+    },
+    "structured_data": {
+      "hazard_category": "其他",
+      "fault_component": "未知",
+      "causal_chain": "患者接受达芬奇辅助子宫切除术后，围手术期发生左侧颈内动脉栓塞导致左半球脑梗死，继发脑疝、出血转化、尿崩症，最终死亡。",
+      "root_cause": "围手术期血栓栓塞事件，可能由患者自身因素（如纤维肌性发育不良家族史）引起，与达芬奇系统无关。",
+      "factual_summary": "患者术后因左颈内动脉栓塞致脑梗死死亡，尸检证实为治疗并发症，无达芬奇系统故障证据。"
+    }
+  },
+  {
+    "mdr_report_key": "2105804",
+    "category": "Shocking",
+    "duration_seconds": 3.56,
+    "tokens_used": {
+      "input": 510,
+      "output": 128
+    },
+    "structured_data": {
+      "hazard_category": "其他",
+      "fault_component": "未知",
+      "causal_chain": "手术中患者胃和膈肌被刺穿，导致败血症，患者住院5个月，18个月后死亡。具体故障原因未确定。",
+      "root_cause": "手术器械刺穿胃和膈肌，引发败血症，导致多器官衰竭死亡。",
+      "factual_summary": "2011年达芬奇手术中患者胃和膈肌被刺穿，引发败血症，18个月后死亡，具体原因未明。"
+    }
+  },
+  {
+    "mdr_report_key": "2548815",
+    "category": "Shocking",
+    "duration_seconds": 4.87,
+    "tokens_used": {
+      "input": 1143,
+      "output": 159
+    },
+    "structured_data": {
+      "hazard_category": "不受控乱动",
+      "fault_component": "未知",
+      "causal_chain": "手术中发生动脉出血，尝试用器械抓钳压迫和夹子止血失败，缝合也失败，决定中转开腹。在撤除部分机械臂时，剩余机械臂仍留在患者体内压迫出血点，但最终未能控制出血，患者死亡。",
+      "root_cause": "术中主动脉出血，止血措施无效，中转开腹过程中机械臂撤除不当导致出血失控",
+      "factual_summary": "2012年达芬奇手术中患者主动脉出血，尝试多种止血方法失败，中转开腹时机械臂撤除不当，患者因失血死亡。"
+    }
+  },
+  {
+    "mdr_report_key": "2559247",
+    "category": "Shocking",
+    "duration_seconds": 3.85,
+    "tokens_used": {
+      "input": 1627,
+      "output": 137
+    },
+    "structured_data": {
+      "hazard_category": "其他",
+      "fault_component": "肾动脉夹",
+      "causal_chain": "放置肾动脉夹时损伤肾动脉，导致大出血，中转开放手术修复，患者术后并发肺炎、多器官衰竭和肾衰竭，最终死亡。",
+      "root_cause": "肾动脉夹放置过程中损伤肾动脉，引发大出血，后续并发症导致死亡。",
+      "factual_summary": "2011年达芬奇辅助肾部分切除术中，肾动脉夹放置导致肾动脉损伤，大出血后中转开放手术，患者最终因肺炎和多器官衰竭死亡。"
+    }
+  },
+  {
+    "mdr_report_key": "2563461",
+    "category": "Shocking",
+    "duration_seconds": 4.95,
+    "tokens_used": {
+      "input": 647,
+      "output": 144
+    },
+    "structured_data": {
+      "hazard_category": "不受控乱动",
+      "fault_component": "Hemo-clip",
+      "causal_chain": "医生在淋巴结清扫时切到髂动脉和静脉，用Hemo-clip止血，但夹子撕裂血管壁导致大出血，紧急中转开腹手术，患者死亡。",
+      "root_cause": "Hemo-clip夹闭时撕裂脆弱的血管壁，导致无法控制的大出血。",
+      "factual_summary": "2010年达芬奇Si子宫切除术中，医生误切髂血管，Hemo-clip止血时撕裂血管致大出血，患者死亡。"
+    }
+  },
+  {
+    "mdr_report_key": "2585957",
+    "category": "Shocking",
+    "duration_seconds": 6.18,
+    "tokens_used": {
+      "input": 924,
+      "output": 139
+    },
+    "structured_data": {
+      "hazard_category": "其他",
+      "fault_component": "未知",
+      "causal_chain": "手术成功完成，术后患者恢复良好，但次日死亡。尸检无出血或肺栓塞，怀疑过量服用麻醉药，且患者曾饮酒并服用抗抑郁药。",
+      "root_cause": "患者术后过量服用麻醉药，可能结合酒精和抗抑郁药导致死亡，与达芬奇系统无关。",
+      "factual_summary": "患者在接受达芬奇子宫切除术后次日死亡，尸检排除手术并发症，怀疑因服用过量麻醉药及酒精、抗抑郁药所致。"
+    }
+  },
+  {
+    "mdr_report_key": "2803906",
+    "category": "Shocking",
+    "duration_seconds": 4.62,
+    "tokens_used": {
+      "input": 816,
+      "output": 177
+    },
+    "structured_data": {
+      "hazard_category": "不受控乱动",
+      "fault_component": "Bipolar Maryland Clamp",
+      "causal_chain": "手术开始时，单极电刀意外自行激活，医生未踩脚踏板；达芬奇代表拔掉脚踏板连接后仍再次激活；最终发现单极能量通过双极Maryland钳意外释放，导致肠穿孔。",
+      "root_cause": "单极能量通过双极Maryland钳意外释放，导致肠穿孔未被及时发现，一周后感染需剖腹探查，切除部分结肠，并发肺栓塞。",
+      "factual_summary": "达芬奇手术中单极电刀意外自行激活，能量通过双极Maryland钳释放导致肠穿孔，一周后感染需剖腹探查，切除结肠，并发肺栓塞。"
+    }
+  },
+  {
+    "mdr_report_key": "2965965",
+    "category": "Shocking",
+    "duration_seconds": 3.54,
+    "tokens_used": {
+      "input": 427,
+      "output": 101
+    },
+    "structured_data": {
+      "hazard_category": "其他",
+      "fault_component": "未知",
+      "causal_chain": "医生缺乏机器人手术经验，操作失误导致患者死亡。",
+      "root_cause": "医生未接受充分培训即进行复杂机器人手术，操作不当引发致命并发症。",
+      "factual_summary": "一名患者在接受机器人手术时死亡，主刀医生此前从未使用机器人执行该手术，缺乏经验导致操作失误。"
+    }
+  },
+  {
+    "mdr_report_key": "2965986",
+    "category": "Shocking",
+    "duration_seconds": 4.35,
+    "tokens_used": {
+      "input": 783,
+      "output": 164
+    },
+    "structured_data": {
+      "hazard_category": "其他",
+      "fault_component": "未知",
+      "causal_chain": "医生使用达芬奇手术机器人进行肾切除术，因经验不足误切主动脉和下腔静脉，导致大出血；同时腹腔内遗留纱布垫和丢失的针未被发现，患者两天后死亡。",
+      "root_cause": "医生缺乏机器人手术经验，未达到熟练所需的手术次数，导致操作失误割裂大血管；医院未充分保障患者安全，且遗留异物未及时处理。",
+      "factual_summary": "2003年，一名教师因医生使用达芬奇机器人经验不足，在肾切除术中误切主动脉和下腔静脉，且腹腔遗留纱布垫和针，术后两天死亡。"
+    }
+  },
+  {
+    "mdr_report_key": "2966014",
+    "category": "Shocking",
+    "duration_seconds": 3.54,
+    "tokens_used": {
+      "input": 709,
+      "output": 121
+    },
+    "structured_data": {
+      "hazard_category": "其他",
+      "fault_component": "未知",
+      "causal_chain": "患者因凝血障碍接受脾切除手术，术中十二指肠出现两个穿孔，术后引发败血症和多器官衰竭，最终导致脑损伤和死亡。",
+      "root_cause": "手术中十二指肠穿孔未被及时发现，导致败血症和多器官衰竭。",
+      "factual_summary": "2007年一名患者因凝血障碍接受达芬奇脾切除手术，术中十二指肠穿孔引发败血症和多器官衰竭，一个月后死亡。"
+    }
+  },
+  {
+    "mdr_report_key": "1008772",
+    "category": "Structural_Issue",
+    "duration_seconds": 3.06,
+    "tokens_used": {
+      "input": 199,
+      "output": 34
+    },
+    "structured_data": {
+      "data_loss_type": "极度敷衍字数不足",
+      "extracted_clues": "无",
+      "can_be_repaired": "NO"
+    }
+  },
+  {
+    "mdr_report_key": "1617093",
+    "category": "Structural_Issue",
+    "duration_seconds": 3.86,
+    "tokens_used": {
+      "input": 615,
+      "output": 107
+    },
+    "structured_data": {
+      "data_loss_type": "被FDA要求删除 / 仅含商业脱敏掩码B4 / 仅含患者隐私掩码B6",
+      "extracted_clues": "前列腺切除术（prostatectomy），2007年，医院泌尿科主任（Chair of Urology），患者死亡，ISI代表，ISI代表直接经理未上报，侧轨焊接损坏，2010年2月17日请求手术报告和尸检报告",
+      "can_be_repaired": "YES"
+    }
+  },
+  {
+    "mdr_report_key": "1655250",
+    "category": "Structural_Issue",
+    "duration_seconds": 4.23,
+    "tokens_used": {
+      "input": 672,
+      "output": 86
+    },
+    "structured_data": {
+      "data_loss_type": "被FDA要求删除",
+      "extracted_clues": "达芬奇S系统，Cox Cryo-Maze心房颤动手术，肝肾功能衰竭，弥散性血管内凝血，患者术后两天死亡，2010年4月8日，波士顿科学公司，Alliance充气手柄，CRE球囊",
+      "can_be_repaired": "YES"
+    }
+  },
+  {
+    "mdr_report_key": "1721314",
+    "category": "Structural_Issue",
+    "duration_seconds": 2.69,
+    "tokens_used": {
+      "input": 323,
+      "output": 83
+    },
+    "structured_data": {
+      "data_loss_type": "被FDA要求删除 / 仅含患者隐私掩码B6",
+      "extracted_clues": "患者死亡日期：2009年；手术类型：泌尿外科手术；涉及达芬奇S手术系统；报告日期：2010年6月11日；主刀医生办公室被联系",
+      "can_be_repaired": "YES"
+    }
+  },
+  {
+    "mdr_report_key": "1727307",
+    "category": "Structural_Issue",
+    "duration_seconds": 2.88,
+    "tokens_used": {
+      "input": 693,
+      "output": 73
+    },
+    "structured_data": {
+      "data_loss_type": "被FDA要求删除 / 仅含患者隐私掩码B6",
+      "extracted_clues": "结肠切除术（colon resection），2010年，达芬奇Si手术系统，患者有已知既往病史，之前手术中曾发生心脏病发作",
+      "can_be_repaired": "NO"
+    }
+  },
+  {
+    "mdr_report_key": "1744642",
+    "category": "Structural_Issue",
+    "duration_seconds": 3.11,
+    "tokens_used": {
+      "input": 688,
+      "output": 101
+    },
+    "structured_data": {
+      "data_loss_type": "被FDA要求删除 / 仅含患者隐私掩码B6",
+      "extracted_clues": "手术名称：DA VINCI S TRANSORAL ROBOTIC SURGERY（经口机器人手术）；手术目的：切除舌根肿瘤；死亡原因：应激性溃疡导致胃肠道出血；尸检日期：2010年；医院继续使用该系统；无类似事件报告",
+      "can_be_repaired": "YES"
+    }
+  },
+  {
+    "mdr_report_key": "11121754",
+    "category": "Structural_Issue",
+    "duration_seconds": 2.37,
+    "tokens_used": {
+      "input": 199,
+      "output": 34
+    },
+    "structured_data": {
+      "data_loss_type": "极度敷衍字数不足",
+      "extracted_clues": "无",
+      "can_be_repaired": "NO"
+    }
+  }
+]
